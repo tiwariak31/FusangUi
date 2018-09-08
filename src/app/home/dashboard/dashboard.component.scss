@@ -1,0 +1,21 @@
+
+
+.dashboard{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: #f2f2f2;
+    font-family: Khula-Regular;
+  font-size: 24px;
+  span{
+    font-family: Khula-SemiBold;
+
+  }
+}
+.displaystyle{
+  position: relative;
+  top: 48px;
+  height: calc(100vh - 48px);
+    background: #f1f5f9;
+}

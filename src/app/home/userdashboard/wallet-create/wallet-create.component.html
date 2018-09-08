@@ -1,0 +1,132 @@
+<div class="wallets-wrapper bgColor10">
+  <div class="row">
+    <div class="col-md-6 col-sm-6 user-details-wrapper">
+      <div class="user-picture">
+
+        <img id="loggedInImage" src="{{imageUrl}}" alt="kim" class="img-circle">
+      </div>
+      <div class="user-details">
+        <div class="user-name khulaRegular">
+          {{username}}
+        </div>
+        <div class="user-status khulaSemiBold">
+          Last Logged In : {{lastlogin | date: 'dd-MM-yyyy HH:mm:ss' }}
+          <!-- <label class="usdstyle">1 BTC ~ {{oneUsdvalue | number : '1.2-2'}} USD</label> -->
+
+        </div>
+
+      </div>
+      <div class="user-status khulaSemiBold right-align">
+        <!-- Last Logged In : {{lastlogin | date: 'dd-MM-yyyy HH:mm:ss' }} -->
+        <label class="usdstyle">1 BTC ~ {{oneUsdvalue | number : '1.2-2'}} USD</label>
+
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-6 wallets-details-wrapper">
+      <div class="wallets-details-box">
+        <ul class="currency-list">
+          <li class="khulaSemiBold">
+            <span class="khulaLite"> {{walletsummaryinfo.totalBtc}} </span>
+            BTC
+          </li>
+          <li class="khulaSemiBold">
+            <span class="khulaLite">{{walletsummaryinfo.totalUsd?.toLocaleString()}}</span>USD
+          </li>
+          <li class="khulaSemiBold">
+            <span class="khulaLite">{{walletsummaryinfo.totalWallet}}</span>
+            Wallets</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row all-wallets khulaLite">
+    <div class="col-md-6 col-sm-6">
+      Wallets
+    </div>
+    <div class="col-md-6 col-sm-6">
+      <div class="dropdown-wraper">
+        <div class="btn-group" dropdown>
+          <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle select-coin khulaRegular font14"
+            aria-controls="dropdown-basic">
+            <img src="./assets/images/personalwallet/{{model.symbol||default.symbol}}" />{{model.type||default.type}}
+          </button>
+          <ul name="country" *dropdownMenu class="dropdown-menu form-control" role="menu" aria-labelledby="button-basic">
+
+            <!-- <li role="menuitem" *ngFor="let item of coinlist" (click)="coinSelected(item.name,item.dial_code)">{{item.name}}</li> -->
+            <li class="font12 khulaRegular" *ngFor="let item of coinlist" (click)="coinSelected(item.type,item.symbol)">
+              <img src="./assets/images/personalwallet/{{item.symbol}}" class="coin-image"> {{item.type}}</li>
+
+          </ul>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="personal-wallets-wrapper">
+    <div class="row">
+      <div class="col-md-4 col-sm-6 col-lg-3 margin-bottom">
+        <!-- <div class=""> -->
+          <div class="center center-add create-wallets-btn">
+            <!-- <div> -->
+              <a [routerLink]="['/fusang/createvalletinfo']" class="marBtm">
+                <!-- <i class="fa fa-list fa-2x"></i> -->
+                <img class="imgcls" src="./assets/images/add-circular-button.svg" alt="add">
+              </a>
+
+            <!-- </div> -->
+            <!-- <div> -->
+              <p>Create wallet</p>
+            <!-- </div> -->
+          <!-- </div> -->
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6 col-lg-3 walletList margin-bottom" *ngFor='let wallet of walletsummaryinfo.walletList' >
+        <div [class.walletDisabled]="wallet.status === 'Invited'" (click)="redirect(wallet.walletId)">
+        <div  class="create-wallets-btn" [ngStyle]="{'border-top':wallet.status === 'Invited' ? '3px solid #39b7c5' : wallet.status === 'Completed' ? '3px solid #457199':'3px solid #e16c7a'}">
+          <button class="btn status-btn" [class.statusInvited]="wallet.status === 'Invited'" [class.statusCompleted]="wallet.status === 'Completed'" [class.statusIncompleted]="wallet.status === 'Incomplete'">{{wallet.status}}</button>
+          <div class="center khulaSemiBold">
+            <p class="wallet-title-box"> {{wallet.walletName}}</p>
+            <div>
+
+
+                <!-- <i class="fa fa-list fa-2x"></i> -->
+                <img class="imgcls" src="./assets/images/bitcoin.svg" alt="add" >
+
+
+            </div>
+            <p class="wallet-id-box"> {{wallet.owner}}</p>
+            <p class="wallet-member-box khulaSemiBold">{{wallet.users}}
+              <span>{{(wallet.users==1)?'Member':'Members'}}</span>
+            <div class="wallet-table" *ngIf="wallet.status!=='Invited'">
+              <!-- <div class="wallet-col">
+                <p class="khulaSemiBold">{{wallet.users}}</p>
+                <p class="khulaRegular">Member</p>
+              </div> -->
+              <div class="wallet-col">
+                <p class="khulaSemiBold">{{wallet.balanceBtc}}</p>
+                <p class="khulaRegular">BTC</p>
+              </div>
+              <div class="wallet-col">
+                <p class="khulaSemiBold">{{wallet.balanceUsd.toLocaleString()}}</p>
+                <p class="khulaRegular">USD</p>
+              </div>
+            </div>
+            <div class="wallet-table" *ngIf="wallet.status==='Invited'">
+
+              <div class="wallet-col">
+                <button class="btn  join-btn sub-btn-info" (click)=joinwallet(wallet.walletId)>JOIN WALLET</button>
+              </div>
+              <!-- <div class="wallet-col">
+                <button class="btn  cancel-btn" (click)="cancelRequesyt(wallet.walletId)" disabled>CANCEL</button>
+              </div> -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

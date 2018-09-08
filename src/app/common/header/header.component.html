@@ -1,0 +1,51 @@
+<div class="row header_css">
+
+  <!-- <div class="col-md-2 hdrdiv">
+  </div>
+  <div class="col-md-4"></div>
+  <div class="col-md-2">
+  </div> -->
+
+  <div class="col-md-12">
+    <div class="inner-header-box">
+    <div class="btn-group currency-positioin displayInline" dropdown>
+      <button id="button-basic" dropdownToggle type="button" class=" dropdown-toggle select-coin currencydp" aria-controls="dropdown-basic">Currency
+      </button>
+      <ul id="dropdown-basic" name="Currency" *dropdownMenu class="dropdown-menu form-control " role="menu" aria-labelledby="button-basic">
+        <!-- <li role="menuitem" *ngFor="let item of countrylist" (click)="countrySelected(item.name,item.dial_code)">{{item.name}}</li> -->
+        <li>United States Dollar</li>
+        <!-- <li>Hong Kong Dollar</li> -->
+      </ul>
+    </div>
+    <div class="displayInline">
+      <span>
+        <img class="header_img notification" src="./assets/images/sidebar/notification.png">
+      </span>
+    </div>
+
+
+    <div class="btn-group currency-positioin displayInline" dropdown>
+        <button id="button-basic" dropdownToggle type="button" class=" dropdown-toggle select-coin currencydp" aria-controls="dropdown-basic">
+            <img id="loggedInImage" src="{{imageUrl}}" class="header_img profilePic">{{userName}}
+        </button>
+        <ul id="dropdown-basicprofile" name="Profile" *dropdownMenu class="dropdown-menu form-control " role="menu" aria-labelledby="button-basic">
+          <li id="profile">
+            <a [routerLink]="['/fusang/userProfile']">
+            <!-- <i class="fa fas fa-user" aria-hidden="true"></i> -->
+            Profile
+            </a>
+          </li>
+          <li id="logout" (click)="logOut()">
+            <!-- <i class="fa fa-sign-out" aria-hidden="true"></i> -->
+            Logout</li>
+        </ul>
+      </div>
+
+  </div>
+    <!-- <span style="float: right;">
+      <img  style="float: right;" class="header_img" src="./assets/images/sidebar/toolbar1.png">
+    </span> -->
+  </div>
+
+
+</div>

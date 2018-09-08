@@ -1,0 +1,12 @@
+{
+  "roleList": [
+    {
+      "name": "Signer",
+      "value": "ADMIN"
+    },
+    {
+      "name": "Viewer",
+      "value": "USER"
+    }
+  ]
+}

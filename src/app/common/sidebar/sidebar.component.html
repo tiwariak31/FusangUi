@@ -1,0 +1,76 @@
+
+
+<div class="area">
+  <nav class="main-menu shadow p-3 mb-5 bg-white">
+  <ul >
+
+<li class="center" >
+        <a >
+          <span  class="display-contents"><img src="./assets/images/sidebar/bitmap@2x.png" class="imagestyle imagecenter"></span>
+
+
+        </a>
+
+    </li>
+    <!-- <li class="has-subnav" routerLinkActive="listActive" [routerLinkActiveOptions]="{exact: true}">
+        <a >
+
+          <span  class="fa-2x"><img src="./assets/images/sidebar/dash.svg" class="imagestyle"></span>
+
+            <span class="block">
+                Dashboard
+            </span>
+        </a>
+
+    </li> -->
+    <li class="has-subnav"  routerLinkActive="listActive" [routerLinkActiveOptions]="{exact: true}">
+        <a [routerLink]="['/fusang/walletcreate']">
+          <span class="fa-2x">
+              <img src="./assets/images/sidebar/wallet.svg" class="imagestyle">
+          </span>
+
+            <span class="block">
+                Wallet
+            </span>
+        </a>
+
+    </li>
+    <li class="has-subnav" *ngIf="typeOfUser" routerLinkActive="listActive" [routerLinkActiveOptions]="{exact: true}">
+      <a [routerLink]="['/fusang/userList']">
+        <span class="fa-2x">
+            <img src="./assets/images/sidebar/users.svg" class="imagestyle">
+        </span>
+
+          <span class="block">
+              Users
+          </span>
+      </a>
+
+  </li>
+    <!-- <li class="has-subnav" routerLinkActive="listActive" [routerLinkActiveOptions]="{exact: true}">
+        <a [routerLink]="['/suggestions']">
+            <i class="fa fa-list fa-2x"></i>
+           <span class="fa-2x"><img src="./assets/images/sidebar/suggestion.png" class="imagestyle"></span>
+
+            <span class=">
+              Suggestions
+            </span>
+        </a>
+
+    </li> -->
+    <!-- <li class="has-subnav" routerLinkActive="listActive" [routerLinkActiveOptions]="{exact: true}">
+        <a >
+
+      <span class="fa-2x"><img src="./assets/images/sidebar/stting.svg" class="imagestyle"></span>
+
+            <span class="block">
+                Settings
+            </span>
+        </a>
+
+    </li> -->
+
+
+</ul>
+</nav>
+</div>

@@ -1,0 +1,106 @@
+<div class="wallets-wrapper">
+    <form name="form" (ngSubmit)="f.form.valid && profileUpdate()" #f="ngForm"  class="notmaterial" novalidate>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="wallets-heading khulaLite"> Profile</div>
+        </div>
+      </div>
+
+      <div class="wallet-info-wrapper">
+        <div class="khulaRegular">
+          General Information
+        </div>
+        <div class="row">
+              <div class="profileImage" [ngStyle]="{'background-image': 'url('+imageUrl+')'}" id="imgCont">
+                <div class="khulaSemiBold changeText">Change</div>
+      <div class="profileImageChange" title="Edit Image">
+        <input type='file' (change)="readURL($event)" />
+      </div>
+    </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="user-name khulaRegular">
+              <div class="fus-name">
+                <div class="group" >
+                  <input class="form-control" type="text" name="firstName" (focusout)="focusFunction('')" (focus)="focusFunction('firstName')" [(ngModel)]="model.firstName" #firstName="ngModel"  required />
+                  <!-- <label [class.activeLabel]="focusedElement=='walletName'" [class.lableTop]="(wDetails.walletName!=='') && (walletName.touched==true || walletName.valid==true|| walletName.valid==false)" [class.inputSuccess]="walletName.valid==true"  [class.inputError1]="walletName.valid==false && walletName.touched==true" [class.inputError]="focusedElement!=='walletName' && walletName.valid==false && walletName.touched==true" for="walletName">First Name &nbsp;<span class="mandatory">*</span></label> -->
+
+                  <label [class.activeLabel]="focusedElement=='firstName'" [class.lableTop]="(model.firstName!=='') && (firstName.touched==true || firstName.valid==true|| firstName.valid==false)"
+                  [class.inputError1]="firstName.valid==false && firstName.touched==true" [class.inputError]="focusedElement!=='firstName' && firstName.valid==false && firstName.touched==true">First Name </label>
+                  <!-- <div *ngIf="!walletName.valid && walletName.touched === true" class="help-block caution">wallet name required</div> -->
+                  <!-- <div *ngIf="!f.submitted && !walletName.valid && walletName.touched === true" class="help-block caution">wallet name required</div> -->
+                </div>
+                <div class="group" >
+                  <input class="form-control" type="text" name="lastName" (focusout)="focusFunction('')" (focus)="focusFunction('lastName')" [(ngModel)]="model.lastName" #lastName="ngModel"  required/>
+                  <!-- <label [class.activeLabel]="focusedElement=='ownerName'" [class.lableTop]="(wDetails.ownerName !== '') && (ownerName.touched === true || ownerName.valid==true|| ownerName.valid === false)" [class.inputSuccess]="ownerName.valid === true"  [class.inputError1]="ownerName.valid === false && ownerName.touched === true" [class.inputError]="focusedElement!=='ownerName' && ownerName.valid === false && ownerName.touched === true" for="ownerName">Last Name &nbsp;<span class="mandatory">*</span></label> -->
+                  <label [class.activeLabel]="focusedElement=='lastName'" [class.lableTop]="(model.lastName!=='') && (lastName.touched==true || lastName.valid==true|| lastName.valid==false)"
+                  [class.inputError1]="lastName.valid==false && lastName.touched==true" [class.inputError]="focusedElement!=='lastName' && lastName.valid==false && lastName.touched==true">Last Name </label>
+                  <!-- <div *ngIf="!ownerName.valid && ownerName.touched === true" class="help-block caution">owner name required</div> -->
+                  <!-- <div *ngIf="!f.submitted && !ownerName.valid && ownerName.touched === true" class="help-block caution">owner name required</div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="user-name khulaRegular">
+              <div class="fus-name">
+                <div class="group" >
+                  <input class="form-control" type="email" name="email" [(ngModel)]="model.email" #email="ngModel" readonly required />
+                  <!-- <label [class.activeLabel]="focusedElement=='noOfUsers'" [class.lableTop]="(wDetails.noOfUsers !== '') && (noOfUsers.touched === true || noOfUsers.valid==true|| noOfUsers.valid === false)" [class.inputSuccess]="noOfUsers.valid === true"  [class.inputError1]="noOfUsers.valid === false && noOfUsers.touched === true" [class.inputError]="focusedElement!=='noOfUsers' && noOfUsers.valid === false && noOfUsers.touched === true" for="noOfUsers">Email ID &nbsp;<span class="mandatory">*</span></label> -->
+                  <label class="lableTop">Email ID</label>
+                  <!-- <div *ngIf="noOfUsersAvail">Enter users more than 0</div>
+                  <div *ngIf="wDetails.noOfUsers === '' && noOfUsers.touched === true" class="help-block caution">number of users required</div> -->
+                  <!-- <div *ngIf="!f.submitted && !noOfUsers.valid && noOfUsers.touched === true" class="help-block caution">number of users required</div> -->
+
+                </div>
+                <div class="group" >
+                  <input class="form-control" (focusout)="focusFunction('')" [class.errBorder]="(invalidphone==true)" (focus)="focusFunction('phoneNumber')" type="number" name="phoneNumber" [(ngModel)]="model.phoneNumber" #phoneNumber="ngModel" (ngModelChange)="onChange($event)" required />
+
+                  <label [class.activeLabel]="(focusedElement=='phoneNumber')" [class.lableTop]="(model.phoneNumber!=='') && (phoneNumber.touched==true || phoneNumber.valid==true || phoneNumber.valid==false)"
+                  [class.inputError1]="(phoneNumber.valid==false && phoneNumber.touched==true) || (invalidphone==true)" [class.inputError]="focusedElement!=='phoneNumber' && phoneNumber.valid==false && phoneNumber.touched==true">Phone Number</label>
+                  <div *ngIf="phoneNumber.touched==true  && model.phoneNumber==''" class="help-block caution">Phone number is required</div>
+                  <div *ngIf="invalidphone && model.phoneNumber!=''" class="help-block caution">Please enter 10 digit number</div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="user-name khulaRegular">
+              <div class="fus-name">
+
+
+                <div class="group" >
+
+                    <label class="lableTop">Country</label>
+
+
+                    <select class="form-control" name="country"  [(ngModel)]="model.country" #country="ngModel"
+                       required>
+                      <option [value]="undefined" [attr.selected]="true" disabled>Select Country</option>
+                      <option *ngFor="let item of countrylist;let i= index" value="{{item.name}}" >{{item.name}}</option>
+                    </select>
+                    <!-- <div  *ngIf="!coinType.valid && coinType.touched==true" class="help-block caution errclass" >Coin is required</div> -->
+
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="user-action-box">
+        <input type="submit" style="cursor:pointer" class="sub-btn-info khulaSemiBold"  value="UPDATE" [disabled]="!f.form.valid">
+        <input type="reset" style="cursor:pointer" class="khulaSemiBold" value="CANCEL" (click)="getProfileDetails()">
+
+      </div>
+
+    </form>
+
+  </div>

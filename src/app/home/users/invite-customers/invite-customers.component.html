@@ -1,0 +1,338 @@
+<!-- <form (ngSubmit)="inviteCustomer(successtemplate) "> -->
+  <button (click)="inviteCustomer(invitetemplate) " class="btn-orange">Invite</button>
+  <button (click)="policyInsights(policyinsights) " class="btn-orange">Policy insights</button>
+  <button (click)="complianceInsights(complianceinsights) " class="btn-orange">Compliance insights</button>
+  <button (click)="signupSuccess(signupsuccess) " class="btn-orange">signup Success</button>
+
+  <button (click)="confirmChecking(confirmchecking) " class="btn-orange">confirm</button>
+  <button (click)="rejectVerification(rejectverification) " class="btn-orange">reject</button>
+
+<!-- </form> -->
+<ng-template #invitetemplate class="invite succesmodal">
+<div class="invitepopup">
+  <div class="modal-header">
+    <div class="modal-header-wrapper">
+        <div class="modal-header-box font24 khulaSemiBold">Invite Fusang Customers</div>
+        <button type="button" class="close font24 pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+  </div>
+  <div class="modal-body invite">
+    <div class="invite-tabs">
+      <div class="Information-box font14 khulaRegular" [class.activeTab]="basic" (click)="showbasic()">Basic Information</div>
+      <div class="Information-box font14 khulaRegular" [class.activeTab]="approver" (click)="showapprover()">Approver Information</div>
+  </div>
+  <div class="basic-info-wrapper" *ngIf="basic">
+    <div class="form-wrapper">
+        <form class="example-form" (ngSubmit)="f.form.valid && nexttab()" #f="ngForm" novalidate>
+          <div class="inner-form">
+              <mat-form-field class="example-half-width">
+                  <input matInput placeholder="First Name" [(ngModel)]="basicmodel.firstName" #firstName="ngModel" required name="firstName" autocomplete="off">
+                </mat-form-field>
+              
+                <mat-form-field class="example-half-width">
+                    <input matInput placeholder="Last Name" [(ngModel)]="basicmodel.lastName"  #lastName="ngModel" required name="laststName" autocomplete="off">
+                </mat-form-field>
+                <!-- <div class="flex-wrap"> -->
+                  <mat-form-field class="example-half-width">
+                    <input type="text" class="arrow" placeholder="Country" aria-label="String" matInput required [formControl]="dpControl" [matAutocomplete]="auto"><span></span>
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectionChanged($event)">
+                      <mat-option *ngFor="let item of filteredOptions| async" [value]="item" >
+                          {{item}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                  <mat-form-field class="example-half-width">
+                    <!-- <span>{{code}}</span> -->
+                      <input matInput placeholder="Phone Number" [(ngModel)]="basicmodel.phoneNo" #phoneNo="ngModel" required name="phoneNo" autocomplete="off">
+                  </mat-form-field>
+                <!-- </div> -->
+                  <mat-form-field class="example-full-width">
+                      <input matInput placeholder="E-mail" [(ngModel)]="basicmodel.email" #email="ngModel" name="email" autocomplete="off" required>
+                  </mat-form-field>
+          </div>
+          <div class="linebottom"></div>
+          <button class="btn-orange">Next{{f.form.valid}}</button>
+          </form>
+    </div>
+  </div>
+  <div class="approver-info-wrapper" *ngIf="approver">
+
+    <div class="form-wrapper">
+        <form class="example-form" (ngSubmit)="invitedSuccessfull(successtemplate)">
+                <mat-accordion>
+                        <mat-expansion-panel *ngFor="let item of x;let i=index" (opened)="item.visibal=true"
+                            (closed)="item.visibal=false" [class.expPannel]="item.visibal">
+                          <mat-expansion-panel-header class="panal-layout" [class.openHeader]="item.visibal">
+                            <mat-panel-title class="khulaSemiBold" [class.khulaBold]="item.visibal">
+                                    <img src="assets/images/inviteuser/{{item.name}}.svg" class="acc-image">{{item.name }} Management
+                            </mat-panel-title>
+                          </mat-expansion-panel-header>
+                          <div class="verifier-box" *ngFor="let role of item.role; let j=index">
+                              <div class="verifier-text example-third-width">{{role}}</div>
+                              <mat-form-field class="example-half-width example-third-width">
+                                <input type="text" class="arrow"  placeholder="Primary {{role}}" aria-label="String" matInput  [formControl]="dpControl"  [matAutocomplete]="auto"><span></span>
+                                <mat-autocomplete #auto="matAutocomplete" class="autocomplete">
+                                  <mat-option class="autocomplete" *ngFor="let list of filteredOptions| async" [value]="list" >
+                                      {{list}}
+                                  </mat-option> 
+                                </mat-autocomplete>
+                              </mat-form-field>
+
+                              <mat-form-field class="example-half-width example-third-width">
+                                <input type="text"  class="arrow"  placeholder="Backup {{role}}" aria-label="String" matInput  [formControl]="dpControl" [matAutocomplete]="auto"><span></span>
+                                <mat-autocomplete #auto="matAutocomplete" class="autocomplete">
+                                  <mat-option *ngFor="let cont of filteredOptions| async" [value]="cont" >
+                                      {{cont}}
+                                  </mat-option>
+                                </mat-autocomplete>
+                              </mat-form-field>
+                          </div>
+                          <!-- <div class="verifier-box">
+                                <div class="verifier-text example-third-width">Checker</div>
+                              <mat-form-field class="example-half-width example-third-width">
+                                <input type="text"  placeholder="Primary Verifier" aria-label="String" matInput  [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                  <mat-option *ngFor="let item of autosearchresult" [value]="item.username" >
+                                      {{item.username}}
+                                  </mat-option>
+                                </mat-autocomplete>
+                              </mat-form-field>
+                              <mat-form-field class="example-half-width example-third-width">
+                                <input type="text"  placeholder="Backup Verifier" aria-label="String" matInput  [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                  <mat-option *ngFor="let item of autosearchresult" [value]="item.username" >
+                                      {{item.username}}
+                                  </mat-option>
+                                </mat-autocomplete>
+                              </mat-form-field>
+                          </div>
+                          <div class="verifier-box">
+                                <div class="verifier-text example-third-width">Approver</div>
+                              <mat-form-field class="example-half-width example-third-width">
+                                <input type="text"  placeholder="Primary Verifier" aria-label="String" matInput  [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                  <mat-option *ngFor="let item of autosearchresult" [value]="item.username" >
+                                      {{item.username}}
+                                  </mat-option>
+                                </mat-autocomplete>
+                              </mat-form-field>
+                              <mat-form-field class="example-half-width example-third-width">
+                                <input type="text"  placeholder="Backup Verifier" aria-label="String" matInput  [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                  <mat-option *ngFor="let item of autosearchresult" [value]="item.username" >
+                                      {{item.username}}
+                                  </mat-option>
+                                </mat-autocomplete>
+                              </mat-form-field>
+                          </div> -->
+                        </mat-expansion-panel>
+                      </mat-accordion>
+                      <!-- <div class="linebottom"></div> -->
+          <button class="btn-orange btn-left">Submit</button>
+        </form>
+    </div>
+  </div>
+  </div>
+  </div>
+</ng-template>
+
+
+
+<ng-template #successtemplate class="invite succesmodal">
+  <div class=" successpopup">
+    <div class="modal-header no-line">
+      <div class="modal-header-wrapper">
+          <div class="modal-header-box font24 khulaSemiBold"></div>
+          <button type="button" class="close font24 pull-right" aria-label="Close" (click)="successRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+    </div>
+    <div class="modal-body center-box">
+      <img src="assets/images/inviteuser/success.svg">
+      <div class="sus-contant-box">
+        <p class="font24 khulaSemiBold success-message">Fusang Customer invited successfully</p>
+        <div>
+          <button class="invitemore khulaSemiBold" (click)="successRef.hide();inviteCustomer(invitetemplate)">Invitemore</button>
+           <button class="btn-orange khulaSemiBold" (click)="successRef.hide()">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #signupsuccess class="invite succesmodal">
+    <div class=" successpopup">
+      <div class="modal-header no-line">
+        <div class="modal-header-wrapper">
+            <div class="modal-header-box font24 khulaSemiBold"></div>
+            <button type="button" class="close font24 pull-right" aria-label="Close" (click)="signupsuccessRef.hide()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+      <div class="modal-body center-box">
+        <img src="assets/images/inviteuser/success.svg">
+        <div class="sus-contant-box">
+          <p class="font24 khulaSemiBold success-message">Your Registration <span class="c-orange">Completed Successfully !</span></p>
+          <p class=" khulaRegular c-s-text">Please wait for your account verification from Fusang team</p>
+          <div>
+             <button class="btn-orange khulaSemiBold" (click)="signupsuccessRef.hide()">Ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+
+
+
+<ng-template #policyinsights class="invite succesmodal">
+<div>
+  <div class="modal-header policyInsightsHeader">
+    <div class="modal-header-wrapper">
+        <div class="modal-header-box font24 khulaSemiBold">Policy Insights</div>
+        <button type="button" class="close font24 pull-right" aria-label="Close" (click)="policyRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+  </div>
+  <div class="modal-body p-i-ul">
+    <div class="insights-desc  policy-desc-bg">
+       <div class="khulaSemiBold desc-inner"> Crossed Daily max limit</div><span class="khulaSemiBold denger-color">03</span>
+    </div>
+    <ul class="violation">
+      <li>
+         <div class="violation-headding khulaSemiBold font14"> Tried a Fourth transaction</div> 
+         <img src="assets/images/inviteuser/calendar.svg" class="m-calendar">
+         <span class="denger-color khulaSemiBold font14 date">20 June 2018</span>
+         <span class=" c-orange khulaSemiBold font14 time">12:24 PM</span>
+        <div class="khulaLite font12 violation-text">Few of the violation in crossing limit was done without proper knowledge on the limit details leading to this violation policy.</div>
+      </li>
+      <li>
+          <div class="violation-headding khulaSemiBold font14"> Tried a Fourth transaction</div> 
+          <img src="assets/images/inviteuser/calendar.svg" class="m-calendar">
+          <span class="denger-color khulaSemiBold font14 date">20 June 2018</span>
+          <span class=" c-orange khulaSemiBold font14 time">12:24 PM</span>
+         <div class="khulaLite font12 violation-text">Few of the violation in crossing limit was done without proper knowledge on the limit details leading to this violation policy.</div>
+       </li>
+       <li>
+          <div class="violation-headding khulaSemiBold font14"> Tried a Fourth transaction</div> 
+          <img src="assets/images/inviteuser/calendar.svg" class="m-calendar">
+          <span class="denger-color khulaSemiBold font14 date">20 June 2018</span>
+          <span class=" c-orange khulaSemiBold font14 time">12:24 PM</span>
+         <div class="khulaLite font12 violation-text">Few of the violation in crossing limit was done without proper knowledge on the limit details leading to this violation policy.</div>
+       </li>
+            <li>
+         <div class="violation-headding khulaSemiBold font14"> Tried a Fourth transaction</div> 
+         <img src="assets/images/inviteuser/calendar.svg" class="m-calendar">
+         <span class="denger-color khulaSemiBold font14 date">20 June 2018</span>
+         <span class=" c-orange khulaSemiBold font14 time">12:24 PM</span>
+        <div class="khulaLite font12 violation-text">Few of the violation in crossing limit was done without proper knowledge on the limit details leading to this violation policy.</div>
+      </li>
+    </ul>
+  </div>
+</div>
+</ng-template>
+<ng-template #complianceinsights class="invite succesmodal">
+  <div>
+    <div class="modal-header complianceinsightsHeader">
+      <div class="modal-header-wrapper">
+          <div class="modal-header-box font24 khulaSemiBold">Compliance Insights</div>
+          <button type="button" class="close font24 pull-right" aria-label="Close" (click)="complianceRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+    </div>
+      <div class="modal-body c-i-ul">
+          <div class="insights-desc  compliance-desc-bg">
+             <div class="khulaSemiBold desc-inner"> Crossed Daily max limit</div><span class="khulaSemiBold denger-color">03</span>
+          </div>
+          <ul class="violation">
+            <li>
+               <div class="violation-headding khulaSemiBold font14"> Tried a Fourth transaction</div> 
+               <img src="assets/images/inviteuser/calendar.svg" class="m-calendar">
+               <span class="denger-color khulaSemiBold font14 date">20 June 2018</span>
+               <span class=" c-orange khulaSemiBold font14 time">12:24 PM</span>
+              <div class="khulaLite font12 violation-text">Few of the violation in crossing limit was done without proper knowledge on the limit details leading to this violation policy.</div>
+            </li>
+            <li>
+                <div class="violation-headding khulaSemiBold font14"> Tried a Fourth transaction</div> 
+                <img src="assets/images/inviteuser/calendar.svg" class="m-calendar">
+                <span class="denger-color khulaSemiBold font14 date">20 June 2018</span>
+                <span class=" c-orange khulaSemiBold font14 time">12:24 PM</span>
+               <div class="khulaLite font12 violation-text">Few of the violation in crossing limit was done without proper knowledge on the limit details leading to this violation policy.</div>
+             </li>
+             <li>
+                <div class="violation-headding khulaSemiBold font14"> Tried a Fourth transaction</div> 
+                <img src="assets/images/inviteuser/calendar.svg" class="m-calendar">
+                <span class="denger-color khulaSemiBold font14 date">20 June 2018</span>
+                <span class=" c-orange khulaSemiBold font14 time">12:24 PM</span>
+               <div class="khulaLite font12 violation-text">Few of the violation in crossing limit was done without proper knowledge on the limit details leading to this violation policy.</div>
+             </li>
+             <li>
+                <div class="violation-headding khulaSemiBold font14"> Tried a Fourth transaction</div> 
+                <img src="assets/images/inviteuser/calendar.svg" class="m-calendar">
+                <span class="denger-color khulaSemiBold font14 date">20 June 2018</span>
+                <span class=" c-orange khulaSemiBold font14 time">12:24 PM</span>
+               <div class="khulaLite font12 violation-text">Few of the violation in crossing limit was done without proper knowledge on the limit details leading to this violation policy.</div>
+             </li>
+          </ul>
+        </div>
+  </div>
+</ng-template>
+
+
+<ng-template #confirmchecking class="invite succesmodal">
+    <div class="modal-header">
+        <div class="modal-header-wrapper">
+            <div class="modal-header-box font24 khulaSemiBold">Confirm Checking Process</div>
+            <button type="button" class="close font24 pull-right" aria-label="Close" (click)="confirmRef.hide()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+      <div class="modal-body invite">
+          <div class="conf-ckeck">
+            <div class="khulaSemiBold font12 conf-check-cont">
+              <p class="c-green-text" >By confirming checking process it is presumed that the following user is found be legitimate and no major violations has been commited.
+              </p>
+              <p class="c-gray-text">
+                  If you have any specfic information which needs to be passed to approver, mention it in the notes below. </p>
+            </div>
+              <mat-form-field class="example-full-width padd32">
+                  <textarea matInput placeholder="Enter the Note"></textarea>
+              </mat-form-field>
+          </div>
+          <button class="btn-orange marg32">Confirm</button>
+      </div>
+</ng-template>
+
+
+
+<ng-template #rejectverification class="invite succesmodal">
+    <div class="modal-header">
+        <div class="modal-header-wrapper">
+            <div class="modal-header-box font24 khulaSemiBold">Reject Verification</div>
+            <button type="button" class="close font24 pull-right" aria-label="Close" (click)="rejectRef.hide()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+      <div class="modal-body invite">
+          <div class="conf-ckeck rejectPadding">
+              <!-- <div class="khulaSemiBold font12 conf-check-cont">
+                <p class="c-green-text" >By confirming checking process it is presumed that the following user is found be legitimate and no major violations has been commited.
+                </p>
+                <p class="c-gray-text">
+                    If you have any specfic information which needs to be passed to approver, mention it in the notes below. </p>
+              </div> -->
+                <mat-form-field class="example-full-width padd32">
+                    <textarea matInput placeholder="Enter the Note"></textarea>
+                </mat-form-field>
+            </div>
+            <button class="btn-orange marg32">Reject</button>
+      </div>
+</ng-template>

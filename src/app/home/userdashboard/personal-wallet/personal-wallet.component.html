@@ -1,0 +1,307 @@
+<div class="pswallet-wrapper">
+  <div class="back-img-wrapper">
+    <a [routerLink]="['/fusang/walletcreate']">
+      <img src="./assets/images/go-back-left-arrow.svg" alt="">
+    </a>
+  </div>
+  <div class="row col-md-12 divstyle">
+    <div class="col-md-6">
+      <label class="font24 khulaLite">{{walletDetails.walletName  | titlecase}}</label>
+    </div>
+    <div class="col-md-6 btn-wrapper-outer">
+      <!-- <button class="declinebtn">CANCEL</button> -->
+      <button class=" btn sub-btn-info" (click)="openBTC(bittransfer)">
+        <img class="sendbtc" src="assets/images/personalwallet/sendbtc.png"> &nbsp;SEND FUND</button>
+    </div>
+
+  </div>
+  <div class="row divstyle">
+    <div class="col-md-4">
+      <div class="wallet-balance-wrapper">
+          <label class="Wallet_Balance">
+              Wallet balance
+            </label>
+            <br>
+            <div class="wallet-balance-inner">
+              <label class="BTC">{{walletDetails.balanceBtc }} BTC</label>
+              <br>
+              <span class="wallet_doller">$ {{walletDetails.balanceUsd.toLocaleString()}}
+              </span>
+              <span class="khulaSemiBold font12 btctousd">1 BTC ~ {{oneUsdvalue | number : '1.2-2'}} USD</span>
+              <img class="wallet_bitcoin" src="assets/images/personalwallet/bitcoin.png">
+          </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+        <div class="wallet_excahngediv">
+            <div class="label-wrapper">
+                <label class="wallet_BTC-Exchange-Rate">BTC Exchange Rate <br/>
+                  <span class="usdValue">{{oneUsdvalue | number : '1.2-2'}} USD</span>
+                </label>
+                <label class="wallet_value">{{avaragePrice  | number : '1.2-2'}} <span [class.walletValueAd]="avaragePrice > 0" [class.walletValueAu]="avaragePrice < 0" ></span></label>
+            </div>
+            <div id="chartContainer">
+            </div>
+            <div [chart]="chart" class="chart-box"></div>
+        </div>
+    </div>
+      <div class="col-md-4" >
+          <div class="wallet_profile">
+              <div class="dis-qr">
+                <qrcode [qrdata]="angularxQrCode" [size]="85" [level]="'H'"></qrcode>
+              </div>
+              <div class="dis-cont">
+                <label class="wallet_Account-ID-Copy">Wallet Address</label>
+                <br>
+                <label class="wallet_userid word_wrap">{{walletDetails.address}}</label>
+                <br>
+                <button class="wallet_sharebuttom"(click)=ShareQrCode(walletAddress)>SHARE</button>
+              </div>
+            </div>
+      </div>
+
+  </div>
+  <div  class="row col-md-12 divstyle sub-tab-btn">
+    <button class="tabbuttons" [class.tabActive]="transdiv" (click)="showtransaction()" >Transactions</button>
+    <button class="tabbuttons" [class.tabActive]="userdiv" (click)="showusers()">Users</button>
+    <button class="tabbuttons" [class.tabActive]="settingdiv"  (click)="showsettings()">Settings</button>
+    <button class="tabbuttons" [class.tabActive]="auditdiv"  (click)="showaudittrail()">Audit trail</button>
+
+  </div>
+
+</div>
+<!-- <div class="bodystyle"></div> -->
+<div class=" bodystyle">
+    <div class="userList" *ngIf="transdiv">
+      <div *ngIf="transactions.length <= 0" class="wellcome-msg">
+        <h4 class="khulaLite">Welcome, to your new wallet.</h4>
+        <p class="khulaSemiBold">No transaction performed yet</p>
+      </div>
+      <div *ngIf="transactions.length > 0">
+          <ng2-smart-table [settings]="settings" [source]="transactions"></ng2-smart-table>
+      </div>
+    </div>
+  <div class="userList" *ngIf="userdiv">
+    <ng2-smart-table [settings]="usersettings" [source]="userDetails"></ng2-smart-table>
+
+
+  </div>
+
+  <div class="userList" *ngIf="settingdiv">
+
+    <div class="textcls">
+      <form name="form" (ngSubmit)="f.form.valid &&  updateWallet()"  class="notmaterial" #f="ngForm" novalidate>
+        <div class="wallet-info-wrapper">
+          <div class="khulaRegular">
+            Wallet Information
+          </div>
+          <div class="row ">
+            <div class="col-md-12">
+              <div class="user-name khulaRegular">
+                <div class="fus-name">
+                  <div class="group" [ngClass]="{ 'has-error': f.submitted && !walletName.valid}">
+                    <input type="text"  name="walletName" [(ngModel)]="walletDetails.walletName" #walletName="ngModel" required />
+                    <label [class.activeLabel]="focusedElement=='walletName'" [class.lableTop]="(walletDetails.walletName!='') && (walletName.touched==true || walletName.valid==true|| walletName.valid==false)"
+                    [class.inputSuccess]="walletName.valid==true" [class.inputError1]="walletName.valid==false && walletName.touched==true"
+                    [class.inputError]="focusedElement!=='walletName' && walletName.valid==false && walletName.touched==true" for="walletName" >Wallet Name</label>
+                    <div *ngIf="!walletName.valid && walletName.touched==true " class="help-block">wallet name required</div>
+                  </div>
+                  <div class="group" [ngClass]="{ 'has-error': f.submitted && !ownerId.valid}">
+                    <input type="text" name="ownerId" [(ngModel)]="walletDetails.ownerId" #ownerId="ngModel" readonly />
+                    <label class="lableTop">Your Name</label>
+                    <!-- <div *ngIf="f.submitted && !ownerId.valid" class="help-block caution">your name required</div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="user-name khulaRegular">
+                <div class="fus-name">
+                  <div class="group" >
+                    <input type="number" name="noOfUsers" [(ngModel)]="walletDetails.noOfUsers" #noOfUsers="ngModel" readonly />
+                    <label class="lableTop">Number of user/s</label>
+                    <!-- <div *ngIf="f.submitted && !noOfUsers.valid" class="help-block caution">no of user required</div> -->
+                  </div>
+                  <div class="group" >
+                    <input type="number" name="noOfSignatures" [(ngModel)]="walletDetails.noOfSignatures" #noOfSignatures="ngModel" readonly
+                    />
+                    <label class="lableTop">Required no of signature/s</label>
+                    <!-- <div *ngIf="f.submitted && !noOfSignatures.valid" class="help-block caution">no of signatures required</div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row ">
+            <div class="col-md-12">
+              <div class="user-name khulaRegular">
+                <div class="fus-name">
+                  <div class="group">
+                      <input type="test" name="coinType" [(ngModel)]="walletDetails.coinType" #coinType="ngModel" readonly>
+                    <label class="lableTop">Coin</label>
+                    <!-- <div class="btn-group">
+                      <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
+                        <span class="caret">{{walletDetails.coinType}}</span>
+                      </button> -->
+                      <!-- <ul id="dropdown-basic" name="coin" *dropdownMenu class="dropdown-menu form-control" role="menu" aria-labelledby="button-basic">
+                        <li role="menuitem"></li> -->
+                        <!-- (click)="coinSelected(item)" -->
+                      <!-- </ul> -->
+                    <!-- </div> -->
+                  </div>
+                  <!-- <div class="group">
+                    <div class="row">
+                      <div class="col-md-1">
+                        <input type="checkbox" class="chckstyle" value="Freeze wallet" />
+                      </div>
+                      <div class="col-md-6">
+                        <span class="font14">Freeze wallet</span>
+                      </div>
+                    </div> -->
+
+                    <!-- <label>Required no of signatures</label> -->
+                  <!-- </div> -->
+
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+
+        <div class="user-action-box">
+          <input type="submit" class="sub-btn-info khulaSemiBold" [disabled]='!f.form.valid' value="UPDATE">
+
+        </div>
+      </form>
+      <div class="row term-condtion khulaSemibold">
+        <div class="col-md-6">Terms and conditions</div>
+        <div class="col-md-6 help-box">Help</div>
+      </div>
+    </div>
+
+
+
+  </div>
+  <div class="userList" *ngIf="auditdiv">
+    <ng2-smart-table [settings]="auditsettings" [source]="auditTrailDetails"></ng2-smart-table>
+
+
+  </div>
+  <!-- <app-show-loading [hidden]="!showPageLoading"></app-show-loading> -->
+</div>
+
+
+<ng-template #bittransfer>
+  <div class="modal-header ">
+    <div class="modal-title Send-Funds">Send Funds</div>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body bodymodalstyle ">
+    <div class="form-container">
+      <form name="fundtransfer" (ngSubmit)="fundtransfer.form.valid && transaction(bittransfer);" #fundtransfer="ngForm"  class="notmaterial" novalidate>
+        <div class="group" >
+          <label class="credential-label inputSuccess" >From &nbsp;<span class="mandatory">*</span></label>
+          <input type="text" class="form-control inputTxt" name="username"  placeholder="User Name"  [(ngModel)]="itemVlue.username" placeholder="User Name" #username = "ngModel" required readonly >
+          <!-- <div *ngIf="!username.valid && username.touched === true" class="help-block caution" >Username is required</div> -->
+        </div>
+        <div class="group"[ngClass]="{ 'has-error': fundtransfer.submitted && !toaddress.valid}">
+          <label [class.activeLabel]="focusedElement=='toaddress'" [class.lableTop]="(itemVlue.toaddress!='') && (toaddress.touched==true || toaddress.valid==true|| toaddress.valid==false)"
+          [class.inputSuccess]="toaddress.valid==true" [class.inputError1]="toaddress.valid==false && toaddress.touched==true"
+          [class.inputError]="focusedElement!=='toaddress' && toaddress.valid==false && toaddress.touched==true"
+         for="toaddress">To &nbsp;<span class="mandatory">*</span></label>
+          <input type="email" class="form-control inputTxt" name="toaddtress" (focusout)="focusFunction('')"  (focus)="focusFunction('toaddress')" [(ngModel)]="itemVlue.toaddress"  #toaddress ="ngModel" required >
+           <!-- [class.lableTop]="(model.repassword!=='') && (repassword.touched==true || repassword.valid==true|| repassword.valid==false)" [class.inputSuccess]="repassword.valid==true"  [class.inputError1]="repassword.valid==false && repassword.touched==true" [class.inputError]="focusedElement!=='repassword' && repassword.valid==false && repassword.touched==true" -->
+          <!-- <div *ngIf="f.submitted && !toaddress.valid" class="help-block caution">To address is required</div> -->
+          <div *ngIf="!toaddress.valid && toaddress.touched === true" class="help-block caution" >To address is required</div>
+          <!-- <div *ngIf="!userEmailid.valid && userEmailid.touched==true" class="help-block caution">Email id is required</div> -->
+        </div>
+        <div class="group"[ngClass]="{ 'has-error': fundtransfer.submitted && !coin.valid}">
+           <label [class.activeLabel]="focusedElement=='coin'" [class.lableTop]="(itemVlue.coin !== '') && (coin.touched === true || coin.valid==true|| coin.valid === false)" [class.inputSuccess]="coin.valid === true"  [class.inputError1]="coin.valid === false && coin.touched === true" [class.inputError]="focusedElement!=='coin' && coin.valid === false && coin.touched === true" for="coin">BTC &nbsp;<span class="mandatory">*</span></label>
+          <!--<input type="number" class="form-control inputTxt" name="coin" [(ngModel)]="itemVlue.coin" #coin="ngModel" required> -->
+          <div class="col-md-12 row">
+
+
+            <div class="col-md-6" style="margin-left: -16px;margin-top: 10px;">
+              <input type="number"  class="form-control inputTxt" name="coin" (focusout)="focusFunction('')"  (focus)="focusFunction('coin')"  [(ngModel)]="itemVlue.coin" #coin="ngModel" (ngModelChange)="onChange($event)" pattern="\d*\.\d*" required >
+              <button class="btcstyle credential-label">BTC</button>
+            </div>
+            <!-- <div class="col-md-1">
+              <img class="Shape" src="assets/images/personalwallet/bittousd.png">
+            </div> -->
+            <div class="col-md-6" style="margin-top: 10px;">
+              <input style="width: 119%" type="number" class="form-control inputTxt"  name="userEmailid" [value]="usdInfo" readonly>
+              <button class="btcstyle credential-label">USD</button>
+            </div>
+          </div>
+          <!-- <div *ngIf="f.submitted && !coin.valid" class="help-block caution" >Coins is required</div> -->
+          <!-- <div class="caution" *ngIf="coin.errors?.pattern">
+            Password should contain 8 characters with 1 uppercase, 1 special and 1 number.
+          </div> -->
+          <div *ngIf="!coin.valid && coin.touched === true && itemVlue.coin===''" class="help-block caution" >Coins is required</div>
+          <div *ngIf="!coin.valid && coin.touched === true && itemVlue.coin!==''" class="help-block caution" >Please provide a valid BTC value</div>
+        </div>
+        <div class="group">
+            <!-- <input class="form-control" type="text" (focusout)="focusFunction('')" (focus)="focusFunction('lastName')" [(ngModel)]="model.lastName" #lastName="ngModel" name="lastName" />
+            <label  [class.acltiveLabel]="focusedElement=='lastName'" [class.lableTop]="(model.lastName!=='') && (lastName.touched==true || lastName.valid==true|| lastName.valid==false)"  [class.inputError1]="lastName.valid==false && lastName.touched==true" [class.inputError]="focusedElement!=='lastName' && lastName.valid==false && lastName.touched==true">Last Name</label> -->
+          <label class="credential-label" [class.activeLabel]="focusedElement=='note'" [class.lableTop]="(itemVlue.note !=='') && (note.touched==true)">Note</label>
+          <input type="text" class="form-control inputTxt" (focusout)="focusFunction('')"  (focus)="focusFunction('note')" [(ngModel)]="itemVlue.note" #note="ngModel" name="note" >
+        </div>
+
+        <div class=" ">
+          <label class="Transaction-Fee">Transaction Fee : 0.0000011 BTC </label>
+          <br>
+          <button class="btcbutton cmn-btn"  [disabled]="!fundtransfer.form.valid" >SEND</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</ng-template>
+<!-- templet for share wallet address -->
+<ng-template #walletAddress class="share_modal_content">
+  <div class="modal-header ">
+    <div class="modal-title qrcode_header">Share OR</div>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="QrmodalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body qrcode_body ">
+    <div class="form-container">
+      <div class="col-md-12 row">
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-8">
+          <div class="col-md-12 row">
+              <div class="col-md-4">
+                <a href="https://mail.google.com" target="_blank">
+                  <img class="Shape_qr" src="assets/images/personalwallet/gmail.png" >
+                </a>
+                </div>
+                <div class="col-md-4">
+                    <img  class="Shape_qr" src="assets/images/personalwallet/facebook.png" >
+                  </div>
+                  <div class="col-md-4">
+                      <a href="https://web.whatsapp.com/" target="_blank">
+                      <img  class="Shape_qr" src="assets/images/personalwallet/whatsapp.png" >
+                      </a>
+                    </div>
+          </div>
+
+        </div>
+        <div class="col-md-2">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

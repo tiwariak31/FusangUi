@@ -1,0 +1,168 @@
+<div class="googleMain-auth">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="header">
+					<div class="logo-wraper">
+						<img src="assets/images/logoblue/logoblue.jpg" class="logo">
+					</div>
+					<div class="user-wraper">
+						<img id="loggedInImage" src="assets/images/kim/kim.jpg" class="user-picture">
+						<label>{{userName}}
+							<span class="fa fa-angle-down"></span>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12" *ngIf="firstLoginn==1">
+				<div class="top-text-box">
+					<p > Add a strong layer of security</p>
+					<!-- <p *ngIf="firstLoginn==2"> A strong layer of security</p> -->
+					<div class="auth-board">
+						<div class="pro-google-auth">
+							<p>Procced with google Auth?
+							</p>
+							<h6>Banjo tote bag bicycle rights, High Life sartorial cray craft beer whatever street art fap.
+							</h6>
+							<div>
+								<button class="auth-btn" (click)="yubikeyauth(!googleauth, 2);">google auth</button>
+							</div>
+							<div class="google-auth-box" *ngIf="googleauth">
+								<div class="innner-box">
+									<h6>Google Authenticator</h6>
+								</div>
+								<div class="auth-content">
+									<div class="group">
+										<!-- <img *ngIf="firstLoginn==1" src="www.google.com/chart?chs=95x95&chld=M|0&cht=qr&chl=otpauth://totp/secret=model.secretKey"> -->
+										<!-- <img *ngIf="firstLoginn==2" src="www.google.com/chart?chs=95x95&chld=M|0&cht=qr&chl=otpauth://totp/secret=scretKey"> -->
+										<!-- <img *ngIf="firstLoginn==1" src="https//www.google.com/chart?chs=95x95&chld=M%7C0&cht=qr&chl=otpauth://totp/fusang%3A{{this.ress}}%3Fsecret%3D{{this.scretKey}}%26issuer%3Dfusang">
+										<img *ngIf="firstLoginn==2" src="https//www.google.com/chart?chs=95x95&chld=M%7C0&cht=qr&chl=otpauth://totp/fusang%3A{{this.ress}}%3Fsecret%3D{{this.scretKey}}%26issuer%3Dfusang"> -->
+
+
+
+										<img *ngIf="firstLoginn==1" src="{{url}}">
+										<img  *ngIf="firstLoginn==2" src="{{secondurl}}">
+
+										<label class="inputSuccess">Use google authenticator app to scan</label>
+									</div>
+
+									<form name="form" (ngSubmit)="f.form.valid && validate()" #f="ngForm"  class="notmaterial" novalidate>
+										<div class="group">
+											<input *ngIf="firstLoginn==1" type="text" [disabled]="true" [(ngModel)]="model.secretKey" #secretKey="ngModel" name="secretKey" readonly>
+											<input *ngIf="firstLoginn==2" type="text" [disabled]="true" [(ngModel)]="scretKey" #secretKey="ngModel" name="secretKey" readonly>
+											<label *ngIf="firstLoginn==1" class="inputSuccess">Paste and save the code below</label>
+											<label *ngIf="firstLoginn==2">Paste and save Your secretKey below </label>
+										</div>
+										<div class="group">
+                      <input type="text" maxlength="6" pattern="([0-9]{6})+" (ngModelChange)="vcValidation($event)" (focusout)="focusFunction('')" (focus)="focusFunction('verificationCode')" class="form-control" name="verificationCode" [(ngModel)]="model.verificationCode" #verificationCode="ngModel" required>
+											<label [class.activeLabel]="focusedElement=='verificationCode'" [class.lableTop]="(model.verificationCode!='') && (verificationCode.touched==true || verificationCode.valid==true|| verificationCode.valid==false)" [class.inputSuccess]="verificationCode.valid==true"  [class.inputError1]="verificationCode.valid==false && verificationCode.touched==true" [class.inputError]="focusedElement!=='verificationCode' && verificationCode.valid==false && verificationCode.touched==true" for="verificationCode">Enter your 2 factor Auth code</label>
+                      <div class="help-block" *ngIf="(!verificationCode.valid && verificationCode.touched) || (verificationCodeValid && verificationCode.touched)">Please enter only 6 digit number</div>
+                    </div>
+										<button [disabled]="!f.form.valid || verificationCodeValid" style="margin-top: 33px" class="btn sub-btn-info">Submit</button>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="pro-Yubikey-auth">
+							<p>Proceed with Yubikey?</p>
+							<h6>If you want to register your MFA with Yubikey, proceed sign-up with yubikey verification</h6>
+							<div>
+								<button class="auth-btn khulaSemiBold font12" >yubikey</button>
+							</div>
+							<div class="yubikey-auth-box" *ngIf="!googleauth">
+								<div class="innner-box">
+									<h6>Yubikey</h6>
+								</div>
+								<div class="auth-content">
+									<div class="group">
+										<input type="password" name="password" required="required">
+										<label>Yubikey label</label>
+									</div>
+									<div class="group">
+										<input type="password" name="password" required="required">
+										<label>Yubikey code</label>
+									</div>
+									<!-- <button class="btn sub-btn-info">Submit</button> -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+      </div>
+      <!-- second time login -->
+      <div class="col-md-12" *ngIf="firstLoginn==2">
+          <div class="top-text-box">
+
+            <p> Login Securely...</p>
+            <div class="auth-board">
+              <div class="pro-google-auth">
+                <p>Procced with google Auth?
+                </p>
+                <h6>Banjo tote bag bicycle rights, High Life sartorial cray craft beer whatever street art fap.
+                </h6>
+                <div>
+                  <button class="auth-btn" (click)="yubikeyauth(!googleauth, 2);">google auth</button>
+                </div>
+                <div class="google-auth-box_secondlogin" *ngIf="googleauth">
+                  <div class="innner-box_secondlogin">
+                    <h6>Google Authenticator</h6>
+                  </div>
+                  <div class="auth-content">
+                    <!-- <div class="group"> -->
+                      <!-- <img *ngIf="firstLoginn==1" src="www.google.com/chart?chs=95x95&chld=M|0&cht=qr&chl=otpauth://totp/secret=model.secretKey"> -->
+                      <!-- <img *ngIf="firstLoginn==2" src="www.google.com/chart?chs=95x95&chld=M|0&cht=qr&chl=otpauth://totp/secret=scretKey"> -->
+                      <!-- <img *ngIf="firstLoginn==1" src="https//www.google.com/chart?chs=95x95&chld=M%7C0&cht=qr&chl=otpauth://totp/fusang%3A{{this.ress}}%3Fsecret%3D{{this.scretKey}}%26issuer%3Dfusang">
+                      <img *ngIf="firstLoginn==2" src="https//www.google.com/chart?chs=95x95&chld=M%7C0&cht=qr&chl=otpauth://totp/fusang%3A{{this.ress}}%3Fsecret%3D{{this.scretKey}}%26issuer%3Dfusang"> -->
+
+
+
+                      <!-- <img *ngIf="firstLoginn==1" src="{{url}}">
+                      <img  *ngIf="firstLoginn==2" src="{{secondurl}}"> -->
+
+                      <!-- <label>Use google authenticator app to scan</label>
+                    </div> -->
+
+                    <form name="secondlogin" (ngSubmit)="secondlogin.form.valid && validate()" #secondlogin="ngForm"  class="notmaterial" novalidate>
+
+                      <div class="group">
+                        <input type="text" maxlength="6" pattern="([0-9]{6})+" (ngModelChange)="vcValidation($event)" (focusout)="focusFunction('')" (focus)="focusFunction('verificationCode')" class="form-control" name="verificationCode" [(ngModel)]="model.verificationCode" #verificationCode="ngModel" required>
+                        <!-- <label [class.activeLabel]="focusedElement=='verificationCode'" [class.lableTop]="(model.verificationCode!='') && (verificationCode.touched==true || verificationCode.valid==true || verificationCode.valid==false)" [class.inputSuccess]="verificationCode.valid==true && verificationCodeValid"  [class.inputError1]="verificationCode.valid==false && verificationCode.touched==true && verificationCodeValid" [class.inputError]="focusedElement!=='verificationCode' && verificationCode.valid==false && verificationCode.touched==true" for="verificationCode">Enter your 2 factor Auth code</label> -->
+                        <label [class.activeLabel]="focusedElement=='verificationCode'" [class.lableTop]="(model.verificationCode!='') && (verificationCode.touched==true || verificationCode.valid==true|| verificationCode.valid==false)" [class.inputSuccess]="verificationCode.valid==true"  [class.inputError1]="verificationCode.valid==false && verificationCode.touched==true" [class.inputError]="focusedElement!=='verificationCode' && verificationCode.valid==false && verificationCode.touched==true" for="verificationCode">Enter your 2 factor Auth code</label>
+                        <div class="help-block" *ngIf="(!verificationCode.valid && verificationCode.touched) || (verificationCodeValid && verificationCode.touched)">Please enter only 6 digit number</div>
+                        <!-- <div class="help-block" *ngIf="(!verificationCode.valid && verificationCode.touched && model.verificationCode!=='')">Alphabets are not allowed</div> -->
+                      </div>
+                      <button [disabled]="!secondlogin.form.valid || verificationCodeValid" style="margin-top: 33px" class="btn sub-btn-info">Submit</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="pro-Yubikey-auth">
+                <p>Proceed with Yubikey?</p>
+                <h6>If you want to register your MFA with Yubikey, proceed sign-up with yubikey verification</h6>
+                <div>
+                  <button class="auth-btn khulaSemiBold font12" >yubikey</button>
+                </div>
+                <div class="yubikey-auth-box" *ngIf="!googleauth">
+                  <div class="innner-box">
+                    <h6>Yubikey</h6>
+                  </div>
+                  <div class="auth-content">
+                    <div class="group">
+                      <input type="password" name="password" required="required">
+                      <label>Yubikey label</label>
+                    </div>
+                    <div class="group">
+                      <input type="password" name="password" required="required">
+                      <label>Yubikey code</label>
+                    </div>
+                    <!-- <button class="btn sub-btn-info">Submit</button> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+		</div>
+	</div>

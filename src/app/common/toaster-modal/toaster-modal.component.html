@@ -1,0 +1,25 @@
+<ng-template #successMessage>
+  <div class="modal-header Popup">
+    <div class="toasterImg">
+      <img src="./assets/images/success.png">
+    </div>
+    <div>
+    <h4 class="modal-title pull-left">{{message}}</h4>
+  </div>
+  <div>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+     <img src="./assets/images/close.png">
+    </button>
+  </div>
+  </div>
+  <!-- <div class="modal-footer footermessage">
+      <button class="btn btn-default" type="button" (click)="modalRef.hide()">OK</button>
+  </div> -->
+
+
+</ng-template>
+<button type="button" id="modalButton" class="btn btn-primary" (click)="openModal(successMessage)"></button>
+
+
+
+

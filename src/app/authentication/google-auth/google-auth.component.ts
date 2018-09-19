@@ -44,7 +44,7 @@ export class GoogleAuthComponent implements OnInit {
       }
     } else {
       this.firstLoginn = 1;
-      this.ss.firstLogin$.subscribe(res1 => res = res );
+      this.ss.firstLogin$.subscribe(res1 => res = res1 );
     }
 
       this.username = window.sessionStorage.getItem('useremailid');
@@ -73,7 +73,7 @@ export class GoogleAuthComponent implements OnInit {
     this.gs.generalServiceInfo('user/chooseAuthType?authType=' + id, 'post', '')
       .subscribe(
         res => {
-          this.model.secretKey = res['userSecret'];
+          this.model.secretKey = res['data']['userSecret'];
           this.firstlogin(this.model.secretKey);
             },
         e => {
@@ -116,7 +116,8 @@ export class GoogleAuthComponent implements OnInit {
     this.gs.generalServiceInfo('user/validate', 'post', obj)
       .subscribe(
         res => {
-          if (res['statusMessage'] === 'SUCCESS') {
+          const response: any = res.status;
+          if (response === 'success') {
             this.ss.ToasterMessage(res['message']);
             document.getElementById('modalButton').click();
           this.lastloggedin();

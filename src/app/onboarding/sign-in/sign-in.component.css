@@ -48,7 +48,13 @@ input:-webkit-autofill:focus {
     position: relative;
     top: 30px;
 }
-
+.forget{
+    background: white;
+    margin-left: 30px;
+    padding: 0px;
+    border: none;
+    cursor: pointer;
+}
 /* .help-block{
   color: red;
   font-size: 10px;

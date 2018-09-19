@@ -1,0 +1,201 @@
+<div class="col-md-12 row mainclss">
+  <div class="invite-tabs">
+    <div class="Information-box font14 khulaRegular" [class.activeTab]="policy" (click)="showpolicyconfig()">Policy Configration</div>
+    <div class="Information-box font14 khulaRegular" [class.activeTab]="compilance" (click)="showacompilance()">Compilance Configrations</div>
+  </div>
+</div>
+<div *ngIf="policy" class="col-md-12 row mainclss">
+  <label class="Select-Customer-Type">Select Customer Type to Edit Policy</label>
+  <div class="col-md-12 row">
+    <div class="col-md-1"></div>
+    <div class="col-md-3 cardstlye">
+      <div class="col-md-12 row securestorage-image">
+        <div class="col-md-12 row">
+          <div class="col-md-10 headertext row">
+            SECURE STORAGE
+          </div>
+          <div class="col-md-2">
+            <img src="./assets/images/userpolicy/pencil.png" class="information">
+          </div>
+        </div>
+        <div class="col-md-12 row">
+          <img src="./assets/images/userpolicy/securestorage.png" class="database">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 cardstlye">
+      <div class="col-md-12 row  deepstorage-image">
+        <div class="col-md-12 row">
+          <div class="col-md-10 headertext row">
+            DEEP STORAGE
+          </div>
+          <div class="col-md-2">
+            <img src="./assets/images/userpolicy/pencil.png" class="information">
+          </div>
+        </div>
+        <div class="col-md-12 row">
+          <img src="./assets/images/userpolicy/deep-storage.png" class="database">
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-3 cardstlye">
+      <div class=" col-md-12 row example-header-image">
+        <div class="col-md-12 row">
+          <div class="col-md-10 headertext row">
+            HIGH FREQUENCY
+          </div>
+          <div class="col-md-2">
+            <img src="./assets/images/userpolicy/pencil.png" class="information">
+          </div>
+        </div>
+        <div class="col-md-12 row">
+          <img src="./assets/images/userpolicy/highfrequency.png" class="database">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-1"></div>
+  </div>
+
+  <div class="col-md-12 row" >
+    <div class="col-md-1"></div>
+    <div class="col-md-3 cardstlye">
+      <div class="col-md-12 row thrddivstyle">
+          <div class="col-md-12 row rowclss">
+              <label class="text-style-1"><img src="./assets/images/userpolicy/transaction-hours.png" class="editicon">&nbsp;Transaction hours</label>
+            </div>
+            <div class="col-md-12 row rowclss">
+              <label class="text-style-1"><img src="./assets/images/userpolicy/ip-address.png" class="editicon">&nbsp;Maximum allowed IPs</label>
+            </div>
+            <div class="col-md-12 row rowclss">
+              <label class="text-style-1"><img src="./assets/images/userpolicy/wallet-address.png" class="editicon">&nbsp;Maximum allowed wallets</label>
+            </div>
+            <div class="col-md-12 row rowclss">
+              <label class="text-style-1"><img src="./assets/images/userpolicy/transaction-volume.png" class="editicon">&nbsp;Transaction Max Allowed Volume Cap</label>
+            </div>
+            <div class="col-md-12 row rowclss">
+              <label class="text-style-1"><img src="./assets/images/userpolicy/frequency-cap.png" class="editicon">&nbsp;Max Allowed Freq Cap </label>
+            </div>
+            <div class="col-md-12 row rowclss">
+                <label class="text-style-1"><img src="./assets/images/userpolicy/new-device.png" class="editicon">&nbsp;Transaction minimum balance</label>
+              </div>
+      </div>
+    </div>
+    <div class="col-md-3 cardstlye">
+      <div class="col-md-12 row thrddivstyle">
+          <div class="col-md-12 row rowclss">
+              <label class="text-style-1"><img src="./assets/images/userpolicy/transaction-hours.png" class="editicon">&nbsp;Transaction hours</label>
+            </div>
+            <div class="col-md-12 row rowclss">
+              <label class="text-style-1"><img src="./assets/images/userpolicy/ip-address.png" class="editicon">&nbsp;Maximum allowed IPs</label>
+            </div>
+            <div class="col-md-12 row rowclss">
+              <label class="text-style-1"><img src="./assets/images/userpolicy/wallet-address.png" class="editicon">&nbsp;Maximum allowed wallets</label>
+            </div>
+            <div class="col-md-12 row rowclss">
+              <label class="text-style-1"><img src="./assets/images/userpolicy/transaction-volume.png" class="editicon">&nbsp;Transaction Max Allowed Volume Cap</label>
+            </div>
+            <div class="col-md-12 row rowclss">
+              <label class="text-style-1"><img src="./assets/images/userpolicy/frequency-cap.png" class="editicon">&nbsp;Max Allowed Freq Cap </label>
+            </div>
+            <div class="col-md-12 row rowclss">
+                <label class="text-style-1"><img src="./assets/images/userpolicy/new-device.png" class="editicon">&nbsp;Transaction minimum balance</label>
+              </div>
+
+
+      </div>
+
+    </div>
+    <div class="col-md-3 cardstlye">
+      <div class="col-md-12 row thrddivstyle">
+        <div class="col-md-12 row rowclss">
+          <label class="text-style-1"><img src="./assets/images/userpolicy/transaction-hours.png" class="editicon">&nbsp;Transaction hours</label>
+        </div>
+        <div class="col-md-12 row rowclss">
+          <label class="text-style-1"><img src="./assets/images/userpolicy/ip-address.png" class="editicon">&nbsp;Maximum allowed IPs</label>
+        </div>
+        <div class="col-md-12 row rowclss">
+          <label class="text-style-1"><img src="./assets/images/userpolicy/wallet-address.png" class="editicon">&nbsp;Maximum allowed wallets</label>
+        </div>
+        <div class="col-md-12 row rowclss">
+          <label class="text-style-1"><img src="./assets/images/userpolicy/transaction-volume.png" class="editicon">&nbsp;Transaction Max Allowed Volume Cap</label>
+        </div>
+        <div class="col-md-12 row rowclss">
+          <label class="text-style-1"><img src="./assets/images/userpolicy/frequency-cap.png" class="editicon">&nbsp;Max Allowed Freq Cap </label>
+        </div>
+        <div class="col-md-12 row rowclss">
+            <label class="text-style-1"><img src="./assets/images/userpolicy/new-device.png" class="editicon">&nbsp;Transaction minimum balance</label>
+          </div>
+
+      </div>
+    </div>
+
+    <div class="col-md-1"></div>
+  </div>
+  <div class="col-md-12 row" *ngIf="view">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <form class="example-form">
+       
+
+          <div class="verifier-box fieldstyle">
+            <div class="verifier-text  example-third-width maintext " ><img src="./assets/images/userpolicy/transaction-hours.png" class="editicon">&nbsp;Transaction Hours Limit</div>
+            <mat-form-field class="example-half-width example-third-width">
+              <input matInput placeholder="Minimum" autocomplete="off" name="TransactionTimeStart">
+            </mat-form-field>
+
+            <mat-form-field class="example-half-width example-third-width">
+              <input matInput placeholder="Maximum" autocomplete="off" name="TransactionTimeEnd">
+            </mat-form-field>
+          </div>
+
+          <div class="verifier-box fieldstyle">
+              <div class="verifier-text  example-third-width maintext "><img src="./assets/images/userpolicy/ip-address.png" class="editicon">&nbsp;IP Address Config</div>
+              <mat-form-field class="example-half-width example-third-width">
+                <input matInput placeholder="Max Allowed IPs" autocomplete="off" name="TransactionTimeStart">
+              </mat-form-field>
+  
+             
+            </div>
+            <div class="verifier-box fieldstyle">
+                <div class="verifier-text  example-third-width maintext"><img src="./assets/images/userpolicy/wallet-address.png" class="editicon">&nbsp;Wallet Address Config</div>
+                <mat-form-field class="example-half-width example-third-width">
+                  <input matInput placeholder="Maximum No of wallets Allowed" autocomplete="off" name="TransactionTimeStart">
+                </mat-form-field>
+    
+                
+              </div>
+              <div class="verifier-box fieldstyle">
+                  <div class="verifier-text  example-third-width maintext "><img src="./assets/images/userpolicy/transaction-volume.png" class="editicon">&nbsp;Transaction Volume Cap</div>
+                  <mat-form-field class="example-half-width example-third-width">
+                    <input matInput placeholder="Max Allowed Volume cap" autocomplete="off" name="TransactionTimeStart">
+                  </mat-form-field>
+      
+                  
+                </div>
+                <div class="verifier-box fieldstyle">
+                    <div class="verifier-text  example-third-width maintext "><img src="./assets/images/userpolicy/frequency-cap.png" class="editicon">&nbsp;Frequency Cap</div>
+                    <mat-form-field class="example-half-width example-third-width">
+                      <input matInput placeholder="Max Allowed Freq cap " autocomplete="off" name="TransactionTimeStart">
+                    </mat-form-field>
+        
+                    
+                  </div>
+                  <div class="verifier-box fieldstyle">
+                      <div class="verifier-text  example-third-width maintext"><img src="./assets/images/userpolicy/new-device.png" class="editicon">&nbsp;New Device Access</div>
+                      <mat-form-field class="example-half-width example-third-width">
+                        <input matInput placeholder="Max Device Access" autocomplete="off" name="TransactionTimeStart">
+                      </mat-form-field>
+          
+                      
+                    </div>
+      </form>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+
+</div>
+<div *ngIf="compilance" class="col-md-12 row mainclss ">
+  <label>test compilance</label>
+</div>

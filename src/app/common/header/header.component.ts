@@ -13,6 +13,8 @@ export class HeaderComponent implements OnInit {
   logout = false;
   userName = '';
   imageUrl: any;
+  roles: any;
+  role: string;
   constructor(private ss: SharedService, private generalService: GeneralService, private router: Router, private toastr: ToastrService) {
 
     const res = JSON.parse(sessionStorage.getItem('firstLogin'));
@@ -21,6 +23,18 @@ export class HeaderComponent implements OnInit {
       } else {
     this.userName = res['firstName'];
     this.imageUrl = res['profilePicUrl'];
+    this.roles= res['roles'];
+    this.roles.forEach(element => {
+      if(element.toLowerCase()=="user"){
+        this.role="Customer";
+      }
+      else if(element.toLowerCase()=="admin"){
+        this.role="Admin";
+      }
+      else{
+        this.role="User";
+      }
+    });
     if ( this.imageUrl === null ) {
       this.imageUrl = './assets/images/sidebar/profile.png';
     }
@@ -64,7 +78,7 @@ document.getElementById('loggedInImage').setAttribute('src', this.imageUrl);
     this.generalService.generalServiceInfo('auth/logout', 'post', '')
     .subscribe(
       res => {
-this.ss.ToasterMessage(res['data']);
+this.ss.ToasterMessage(res['message']);
 document.getElementById('modalButton').click();
 this.logout = false;
 sessionStorage.removeItem('firstLogin');

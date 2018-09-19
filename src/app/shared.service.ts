@@ -27,6 +27,10 @@ export class SharedService {
     public firstLogin = new Subject<any>();
     public walletid = new Subject<any>();
     public toasterMessage = new Subject<any>();
+    public tableData = new Subject<any>();
+    public totalTableData = new Subject<any>();
+    public displayedColumn = new Subject<any>();
+    public workflowObject = new Subject<any>();
 
   private openuserinvite = new Subject <any>();
   private loadSubject = new Subject<any>();
@@ -37,13 +41,20 @@ public loadSubject$ = this.loadSubject.asObservable();
     public walletid$ = this.walletid.asObservable();
     public openuserinvite$ = this.openuserinvite.asObservable();
     public toasterMessage$ = this.toasterMessage.asObservable();
+    public tableData$ = this.tableData.asObservable();
+    public displayedColumn$ = this.displayedColumn.asObservable();
+    public workflowObject$ = this.workflowObject.asObservable();
+    public totalTableData$ = this.totalTableData.asObservable();
+
+
     token: any = '';
 
-    Openmodel() {
-      this.openuserinvite.next();
+    WorkflowObject(workflowObject) {
+      this.workflowObject.next(workflowObject);
     }
-
-
+    TotalTableData(totalTableData) {
+      this.totalTableData.next(totalTableData);
+    }
     getValid(param) {
       this.yubiInfo.next(param);
     }
@@ -56,6 +67,12 @@ public loadSubject$ = this.loadSubject.asObservable();
     ToasterMessage(val) {
       this.toasterMessage.next(val);
    }
+   TableData(val) {
+    this.tableData.next(val);
+ }
+ DisplayedColumn(val) {
+  this.displayedColumn.next(val);
+}
     FirstLogin(val) {
        this.firstLogin.next(val);
       sessionStorage.setItem('firstLogin', JSON.stringify(val));

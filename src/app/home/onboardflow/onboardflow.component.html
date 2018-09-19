@@ -1,0 +1,378 @@
+<div class="onboardflow">
+  <div class="flow">
+    <div class="flow__name">
+      <div>
+        <h2 class="khulaSemiBold font24 headingcolor">{{workflowObject.info}}</h2>
+        <div class="flow__name__stage">
+          <!-- <h5 class="khulaSemiBold font14 headingcolor">312036</h5> -->
+          <h6 style="background-color:#9e6efd;"></h6>
+          <h5 class="khulaSemiBold font14" style="color:#9e6efd;">{{workflowbtn}} Stage</h5>
+        </div>
+      </div>
+      <div>
+        <button class="btn-white" (click)="rejectVerification(rejectverification)" *ngIf="workflowObject.ticketStatus == 'Open'">Reject</button>
+        <button class="btn-orange" (click)="confirmChecking(confirmchecking) " *ngIf="workflowObject.ticketStatus == 'Open'">{{workflowbtn}}</button>
+      </div>
+    </div>
+    <div class="flow__diagram" id="flow__diagram">
+      <div *ngFor="let flowdata of workflow">
+          <div class="flow__complete" *ngIf="flowdata.isDone == true">
+            <!-- <p class="circle"></p> -->
+            <img class="flow-success" src="/assets/images/onbording/success.svg">
+            <h4 class="khulaSemiBold font12">{{flowdata.status}}</h4>
+          </div>
+          <div class="flow__inprocess" *ngIf="flowdata.isDone == false && flowdata.statusType == 'Active'">
+            <!-- <p class="circle inprogessCircle"></p> -->
+            <span class="outer circle inprogessOuterCircle shapeborder disblock">
+              <span class="inner inprogessInnerCircle shapeborder disblock">&nbsp;</span>
+            </span>
+            <h4 class="khulaSemiBold font12">{{flowdata.status}}</h4>
+          </div>
+          <div class="" *ngIf="flowdata.isDone == false && flowdata.statusType == 'notActive'">
+            <p class="circle"></p>
+            <h4 class="khulaSemiBold font12">{{flowdata.status}}</h4>
+          </div>
+    </div>
+      <!-- <div class="">
+        <p class="circle"></p>
+        <h4 class="khulaSemiBold font12">Approver</h4>
+      </div> -->
+      <!-- <div class="">
+        <p class="circle"></p>
+        <h4 class="khulaSemiBold font12">Signup</h4>
+      </div> -->
+      <!-- <div class="">
+        <p class="circle"></p>
+        <h4 class="khulaSemiBold font12">Verifier</h4>
+      </div> -->
+      <!-- <div class="">
+        <p class="circle"></p>
+        <h4 class="khulaSemiBold font12">Checker</h4>
+      </div> -->
+      <!-- <div class="">
+        <p class="circle"></p>
+        <h4 class="khulaSemiBold font12">Approver</h4>
+      </div> -->
+      <!-- <div class="">
+        <p class="circle"></p>
+        <h4 class="khulaSemiBold font12">Signin</h4>
+      </div> -->
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+          <div class="info__heading">
+              <h2 class="khulaSemiBold font18 headingcolor">Customer Information</h2>
+            </div>
+        <div class="info__right__detail border-top3954e5">
+            <div class="verifier-box">
+              <mat-form-field class="example-half-width example-third-width">
+                <input matInput placeholder="First Name" autocomplete="off" name="firstName" [(ngModel)]="onbordingDetails.firstName" #firstName = "ngModel" readonly>
+              </mat-form-field>
+
+              <mat-form-field class="example-half-width example-third-width">
+                <input matInput placeholder="Last Name" autocomplete="off" name="lastName" [(ngModel)]="onbordingDetails.lastName" #lastName = "ngModel" readonly>
+              </mat-form-field>
+            </div>
+            <div class="verifier-box">
+              <mat-form-field class="example-half-width example-third-width">
+                <input matInput placeholder="Country" autocomplete="off" name="country" [(ngModel)]="onbordingDetails.country" #country = "ngModel" readonly>
+              </mat-form-field>
+              <!-- <mat-form-field class="country-code example-third-width">
+                <input matInput placeholder="Code" autocomplete="off"  name="code" readonly> -->
+                <!-- name="firstName" [(ngModel)]="onbordingDetails.firstName" #firstName = "ngModel" -->
+              <!-- </mat-form-field> -->
+
+              <mat-form-field class="phone-number example-third-width">
+                <input matInput placeholder="Phone Number" autocomplete="off" name="phoneNumber" [(ngModel)]="onbordingDetails.phoneNumber" #phoneNumber = "ngModel" readonly>
+              </mat-form-field>
+            </div>
+            <div class="verifier-box">
+              <mat-form-field class="example-half-width example-third-width">
+                <input matInput placeholder="Email ID" autocomplete="off" name="username" [(ngModel)]="onbordingDetails.username" #username = "ngModel" readonly>
+              </mat-form-field>
+
+              <mat-form-field class="example-half-width example-third-width" *ngIf="cType">
+                <input matInput placeholder="Customer Type" autocomplete="off" name="userType" [(ngModel)]="onbordingDetails.userType" #userType = "ngModel" readonly>
+              </mat-form-field>
+            </div>
+          </div>
+
+      <div *ngIf="workflowType=='CustomerInvite'">  
+        <div class="info__heading">
+          <h2 class="khulaSemiBold font18 headingcolor">Role Management Information </h2>
+          <div>
+            <!-- <button class="btn-white" *ngIf="showEdit" (click)="editCustomerInfo()">Edit</button>
+          <button class="btn-white" *ngIf="!showEdit" (click)="resetCustomerInfo()">Cancel</button>
+          <button class="btn-orange" *ngIf="!showEdit" (click)="saveCustomerInfo()">Save</button> -->
+            <!-- <span class="khulaBold font14 colorde792f" *ngIf="showEdit" (click)="editCustomerInfo()">Edit</span>
+            <span class="khulaBold font14 colorde792f margin-right" *ngIf="!showEdit" (click)="resetCustomerInfo()">Cancel</span>
+            <span class="khulaBold font14 colorde792f" *ngIf="!showEdit" (click)="saveCustomerInfo()">Save</span> -->
+            <span class="khulaBold font14 colorde792f"  (click)="expand()">{{ExpandText}}</span>
+          </div>
+        </div>
+
+
+        <!-- <div (click)="allExpandState = true"><button>allExpandState</button></div> -->
+        <div class="info__right__detail border-top3954e5 backgound-colorffffff">
+            <div class="form-wrapper">
+                <!-- <form class="example-form" (ngSubmit)="invitedSuccessfull(successtemplate)" #f="ngForm"> -->
+                <form class="example-form" (ngSubmit)="f.form.valid && invitedSuccessfull(successtemplate)" #f="ngForm">
+                 
+                    <mat-expansion-panel *ngFor="let item of x;let i=index" (opened)="item.visible=true" (closed)="item.visible=false" [class.expPannel]="item.visible" [expanded]="allExpandState">
+                      <mat-expansion-panel-header class="panal-layout" [class.openHeader]="item.visible" (click)="onDeptSelect(item)">
+                        <mat-panel-title class="khulaSemiBold" [class.khulaBold]="item.visible">
+                          <img src="assets/images/inviteuser/{{item.name.split(' ')[0].toLowerCase()}}.svg" class="acc-image">{{item.name}}
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <div class="verifier-box" *ngFor="let role of item.role; let j=index">
+                        <div class="verifier-text example-third-width">{{role}}</div>
+                        <mat-form-field class="example-half-width example-third-width">
+                            <input matInput class="arrow" placeholder="Primary {{role}}" aria-label="String" [(ngModel)]="model['primary_' + item.id + '_' + role.toUpperCase()]" [name]="'primary_' + item.id + '_' + role.toUpperCase()"  [matAutocomplete]="auto" (focus)="onFocus(role.toLowerCase())" (ngModelChange)="onValChange(model['primary_' + item.id + '_' + role.toUpperCase()], 'primary_' + item.id + '_' + role.toUpperCase())" readonly><span></span>
+                          <!-- <input type="text" class="arrow" placeholder="Primary {{role}}" aria-label="String" matInput [matAutocomplete]="auto"> -->
+                          <mat-autocomplete #auto="matAutocomplete" class="autocomplete" [displayWith]="displayFn">
+                            <mat-option class="autocomplete" *ngFor="let list of filteredValues" [value]="list">
+                              {{list.name}}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+          
+                        <mat-form-field class="example-half-width example-third-width">
+                            <input matInput class="arrow" placeholder="Backup {{role}}" aria-label="String" [(ngModel)]="model['backup_' + item.id + '_' + role.toUpperCase()]" [name]="'backup_' + item.id + '_' + role.toUpperCase()"  [matAutocomplete]="auto2" (focus)="onFocus(role.toLowerCase())" (ngModelChange)="onValChange(model['backup_' + item.id + '_' + role.toUpperCase()], 'backup_' + item.id + '_' + role.toUpperCase())" readonly><span></span>
+                            <mat-autocomplete #auto2="matAutocomplete" class="autocomplete" [displayWith]="displayFn">
+                              <mat-option class="autocomplete" *ngFor="let list of filteredValues" [value]="list">
+                                {{list.name}}
+                              </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+                
+                    </mat-expansion-panel>
+                 
+                  <!-- <div class="linebottom"></div> -->
+                  <!-- <button class="btn-orange btn-left">Submit{{f.form.valid}}</button> -->
+                </form>
+              </div>
+        </div>
+      </div>
+
+        <!-- <div> -->
+            <div *ngIf="workflowType=='Transaction'">
+          <div class="info__heading">
+            <h2 class="khulaSemiBold font18 headingcolor">Transaction Details</h2>
+          </div>
+          <div class="info__right__detail border-top3954e5">
+            <div class="verifier-box">
+              <mat-form-field class="example-half-width example-third-width">
+                <input matInput placeholder="From wallet" autocomplete="off" name="fromWallet" [(ngModel)]="transactionDetails.fromWallet" #fromWallet = "ngModel" readonly >
+              </mat-form-field>
+
+              <mat-form-field class="example-half-width example-third-width">
+                <input matInput placeholder="To wallet" autocomplete="off" name="toWallet" [(ngModel)]="transactionDetails.toWallet" #toWallet = "ngModel" readonly>
+              </mat-form-field>
+            </div>
+            <div class="verifier-box">
+              <mat-form-field class="example-half-width example-third-width">
+                <input matInput placeholder="USD" autocomplete="off" name="USD" [value]="usdInfo" readonly>
+              </mat-form-field>
+
+              <mat-form-field class="example-half-width example-third-width">
+                <input matInput placeholder="BTC" autocomplete="off" name="btc" [(ngModel)]="transactionDetails.btc" #btc = "ngModel" readonly>
+              </mat-form-field>
+            </div>
+            <div class="verifier-box">
+              <mat-form-field class="notefield example-third-width">
+                <input matInput placeholder="Note from Initiator" autocomplete="off" name="note" [(ngModel)]="transactionDetails.note" #note = "ngModel" readonly>
+              </mat-form-field>
+            </div>
+            <div class="verifier-box">
+
+              <label class="signaturestatus">Signature status</label>
+              <br>
+              <label class="Signed">{{transactionDetails.signatory}} out of {{transactionDetails.signatory}} Signed</label>
+
+            </div>
+          </div>
+        </div>  
+
+        <!-- <div> -->
+            <div *ngIf="workflowType=='Transaction'">
+          <div class="info__heading">
+            <h2 class="khulaSemiBold font18 headingcolor">Signer Details</h2>
+          </div>
+          <div class="info__right__detail border-top3954e5">
+            <div class="verifier-box" >
+              <mat-form-field class="example-half-width example-third-width" *ngFor="let item of onbordingDetails.signatories; let j=index" >
+                <input matInput placeholder="Signer Email ID" autocomplete="off" name="item" [value]="item" readonly><img  class="ststuscls"  src="assets/images/userpolicy/success.png">
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-4">
+        <div class="info__heading">
+          <h2 class="khulaSemiBold font18 headingcolor">Insights</h2>
+        </div>
+        <div class="info__right__detail border-topd42e42 backgound-colorfff9f9">
+          <div class="policyViolation">
+            <h4 class="khulaBold font14 colorCoded42e42 text-left-custom">Policy Insights</h4>
+            <div class="no-policy" *ngIf="insightsInfo?.policy.length == 0">
+              <img src="/assets/images/onbording/shape.svg">
+              <p class="mrgintop-Policy">No policy insights for this operation.</p>
+          </div>
+            <div *ngFor="let item of insightsInfo.policy; let j=index" insightsInfo>
+
+              <p class="mrgintop-Policy-insight crossLimit font12"  (click)="policyinsight(bittransfer)">{{item.policyConstraint}}
+                <!-- <span class="dotstle">...</span>  -->
+              </p>
+              
+            </div>
+
+            <!-- <div class="insights-list">
+              <div class="row insights-listrow">
+                  <div class="col-md-1">
+                        <p class="insightscount">03</p>
+                  </div>
+                  <div class="col-md-9 crossLimit font12">
+                      Crossed Max daily limit 
+                  </div>
+                  <div class="col-md-2">
+                        
+                  </div>
+              </div>
+          </div> -->
+
+          </div>
+        </div>
+        <div class="info__right__detail border-top3954e5 backgound-colorcomplience">
+          <div class="policyViolation">
+            <h4 class="khulaBold font14 colorCoded42e42 text-left-custom">Compliance Insights</h4>
+            <div class="no-policy">
+              <img src="/assets/images/onbording/compliance.svg">
+              <p class="mrgintop-Policy">No compliance insights for this operation.</p>
+            </div>
+            <!-- <div class="insights-list">
+              <div class="row insights-listrow">
+                <div class="col-md-1">
+                  <p class="insightscount">03</p>
+                </div>
+                <div class="col-md-9 crossLimit font12">
+                  Crossed Max daily limit
+                </div>
+                <div class="col-md-2">
+
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </div>
+        <div class="info__heading">
+          <h2 class="khulaSemiBold font18 headingcolor">Status/Notes</h2>
+        </div>
+       
+        <div class="info__right__detail border-top56ac17 backgound-Satusnote">
+            <div class="no-policy" *ngIf="insightsInfo.statusOrNotes.length==0">
+                <!-- <img src="/assets/images/onbording/compliance.svg"> -->
+                <p class="mrgintop-Policy">No Status/Note</p>
+              </div>
+          <div *ngFor="let item of insightsInfo.statusOrNotes; let j=index">
+            <div class="row">
+              <div class="col-md-1">
+                <img src="/assets/images/onbording/checkbox-green.svg">
+              </div>
+              <div class="col-md-10 font14 crossLimit">
+                Transaction Initiate
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 font12 margintop-12">
+                <span class="InviteUserName">Jim</span> &nbsp;
+                <span>On 12 Jun 2018 02:30 PM</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #bittransfer>
+    <div class="modal-header border-top3954e5">
+      <div class="modal-title Send-Funds">Policy Insights</div>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">
+          <img class="closeimg" src="/assets/images/close.png">
+        </span>
+      </button>
+    </div>
+    <div class="modal-body bodymodalstyle ">
+      <!-- <div class="form-container">
+        <p>No compliance insights for this operation.</p>
+      </div> -->
+      <div class="form-container" *ngFor="let item of insightsInfo.policy; let j=index" insightsInfo>
+          <p class="datestle  font12" ><img class="clandercls"src="/assets/images/userpolicy/calendar.png">{{item.createdDate | date:'medium'}}
+              <!-- <span class="dotstle">...</span>  -->
+            </p>
+          <p class="popup-Policy-insight crossLimit font12" >{{item.policyConstraint}}
+            <!-- <span class="dotstle">...</span>  -->
+          </p>
+          
+        </div>
+    </div>
+  </ng-template>
+  <!-- confirm template statts -->
+<ng-template #confirmchecking class="invite succesmodal">
+    <div class="modal-header">
+        <div class="modal-header-wrapper">
+            <div class="modal-header-box font24 khulaSemiBold">Confirm {{workflowbtn}} Process</div>
+            <button type="button" class="close font24 pull-right" aria-label="Close" (click)="confirmRef.hide()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+      <div class="modal-body invite">
+          <div class="conf-ckeck">
+            <div class="khulaSemiBold font12 conf-check-cont">
+              <p class="c-green-text" >By confirming {{workflowbtn}} process it is presumed that the following user is found be legitimate and no major violations has been commited.
+              </p>
+              <p class="c-gray-text">
+                  If you have any specfic information which needs to be passed to approver, mention it in the notes below. </p>
+            </div>
+              <mat-form-field class="example-full-width padd32">
+                  <textarea matInput placeholder="Enter the Note" [(ngModel)]="approve"></textarea>
+              </mat-form-field>
+          </div>
+          <button class="btn-orange marg32" (click)="updateDetail('Close')">Confirm</button>
+      </div>
+</ng-template>
+  <!-- confirm template ends -->
+
+    <!-- rejectVerification template statts -->
+<!-- <button (click)="rejectVerification(rejectverification)" class="btn-orange">reject</button> -->
+<ng-template #rejectverification class="invite succesmodal">
+    <div class="modal-header">
+        <div class="modal-header-wrapper">
+            <div class="modal-header-box font24 khulaSemiBold">Reject Verification</div>
+            <button type="button" class="close font24 pull-right" aria-label="Close" (click)="rejectRef.hide()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+      <div class="modal-body invite">
+          <div class="conf-ckeck rejectPadding">
+              <!-- <div class="khulaSemiBold font12 conf-check-cont">
+                <p class="c-green-text" >By confirming checking process it is presumed that the following user is found be legitimate and no major violations has been commited.
+                </p>
+                <p class="c-gray-text">
+                    If you have any specfic information which needs to be passed to approver, mention it in the notes below. </p>
+              </div> -->
+                <mat-form-field class="example-full-width padd32">
+                    <textarea matInput placeholder="Enter the Note" [(ngModel)]="reject"></textarea>
+                </mat-form-field>
+            </div>
+            <button class="btn-orange marg32" (click)="updateDetail('Reject')">Reject</button>
+      </div>
+</ng-template>
+  <!-- rejectVerification template ends -->

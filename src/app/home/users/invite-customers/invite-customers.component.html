@@ -1,13 +1,7 @@
 <!-- <form (ngSubmit)="inviteCustomer(successtemplate) "> -->
-  <button (click)="inviteCustomer(invitetemplate) " class="btn-orange">Invite</button>
-  <button (click)="policyInsights(policyinsights) " class="btn-orange">Policy insights</button>
-  <button (click)="complianceInsights(complianceinsights) " class="btn-orange">Compliance insights</button>
-  <button (click)="signupSuccess(signupsuccess) " class="btn-orange">signup Success</button>
 
-  <button (click)="confirmChecking(confirmchecking) " class="btn-orange">confirm</button>
-  <button (click)="rejectVerification(rejectverification) " class="btn-orange">reject</button>
-
-<!-- </form> -->
+<!--customer invite popup starts -->
+<button (click)="inviteCustomer(invitetemplate) " class="btn-orange">Invite</button><!-- button to call invite template -->
 <ng-template #invitetemplate class="invite succesmodal">
 <div class="invitepopup">
   <div class="modal-header">
@@ -21,22 +15,23 @@
   <div class="modal-body invite">
     <div class="invite-tabs">
       <div class="Information-box font14 khulaRegular" [class.activeTab]="basic" (click)="showbasic()">Basic Information</div>
-      <div class="Information-box font14 khulaRegular" [class.activeTab]="approver" (click)="showapprover()">Approver Information</div>
+      <div class="Information-box font14 khulaRegular" [class.activeTab]="approver" (click)="showapprover()" [class.tabDesabled]="!basicForm.valid">Approver Information</div>
+      <div class="Information-box font14 khulaRegular" [class.activeTab]="assignroles" (click)="showassignroles()">Assign Roles</div>
   </div>
   <div class="basic-info-wrapper" *ngIf="basic">
     <div class="form-wrapper">
-        <form class="example-form" (ngSubmit)="f.form.valid && nexttab()" #f="ngForm" novalidate>
+        <form class="example-form" [formGroup]="basicForm" (ngSubmit)="nexttab()" #f="ngForm" novalidate>
           <div class="inner-form">
               <mat-form-field class="example-half-width">
-                  <input matInput placeholder="First Name" [(ngModel)]="basicmodel.firstName" #firstName="ngModel" required name="firstName" autocomplete="off">
+                  <input matInput placeholder="First Name" required formControlName="firstName"  name="firstName" autocomplete="off" >
                 </mat-form-field>
               
                 <mat-form-field class="example-half-width">
-                    <input matInput placeholder="Last Name" [(ngModel)]="basicmodel.lastName"  #lastName="ngModel" required name="laststName" autocomplete="off">
+                    <input matInput placeholder="Last Name" required formControlName="lastName"   name="laststName" autocomplete="off">
                 </mat-form-field>
                 <!-- <div class="flex-wrap"> -->
                   <mat-form-field class="example-half-width">
-                    <input type="text" class="arrow" placeholder="Country" aria-label="String" matInput required [formControl]="dpControl" [matAutocomplete]="auto"><span></span>
+                    <input type="text" class="arrow" required placeholder="Country" aria-label="String" matInput  [matAutocomplete]="auto" formControlName="country"><span></span>
                     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectionChanged($event)">
                       <mat-option *ngFor="let item of filteredOptions| async" [value]="item" >
                           {{item}}
@@ -45,101 +40,119 @@
                   </mat-form-field>
                   <mat-form-field class="example-half-width">
                     <!-- <span>{{code}}</span> -->
-                      <input matInput placeholder="Phone Number" [(ngModel)]="basicmodel.phoneNo" #phoneNo="ngModel" required name="phoneNo" autocomplete="off">
+                      <input matInput placeholder="Phone Number" type="number" required name="phoneNo" autocomplete="off" formControlName="phoneNumber"  maxLength="{{countryPhonelen}}"
+                      oninput="this.value=this.value.slice(0,this.maxLength)">
+                      <!-- <mat-error *ngIf="getLength(phoneNumber) !== countryPhonelen">
+                        Please enter {{countryPhonelen}} digit phoneNo
+                      </mat-error> -->
                   </mat-form-field>
                 <!-- </div> -->
                   <mat-form-field class="example-full-width">
-                      <input matInput placeholder="E-mail" [(ngModel)]="basicmodel.email" #email="ngModel" name="email" autocomplete="off" required>
+                      <input matInput placeholder="E-mail" required name="email" autocomplete="off" formControlName="username">
                   </mat-form-field>
           </div>
           <div class="linebottom"></div>
-          <button class="btn-orange">Next{{f.form.valid}}</button>
+          <button class="btn-orange" [disabled]="!basicForm.valid">Next</button>
           </form>
     </div>
   </div>
   <div class="approver-info-wrapper" *ngIf="approver">
-
     <div class="form-wrapper">
-        <form class="example-form" (ngSubmit)="invitedSuccessfull(successtemplate)">
-                <mat-accordion>
-                        <mat-expansion-panel *ngFor="let item of x;let i=index" (opened)="item.visibal=true"
-                            (closed)="item.visibal=false" [class.expPannel]="item.visibal">
-                          <mat-expansion-panel-header class="panal-layout" [class.openHeader]="item.visibal">
-                            <mat-panel-title class="khulaSemiBold" [class.khulaBold]="item.visibal">
-                                    <img src="assets/images/inviteuser/{{item.name}}.svg" class="acc-image">{{item.name }} Management
-                            </mat-panel-title>
-                          </mat-expansion-panel-header>
-                          <div class="verifier-box" *ngFor="let role of item.role; let j=index">
-                              <div class="verifier-text example-third-width">{{role}}</div>
-                              <mat-form-field class="example-half-width example-third-width">
-                                <input type="text" class="arrow"  placeholder="Primary {{role}}" aria-label="String" matInput  [formControl]="dpControl"  [matAutocomplete]="auto"><span></span>
-                                <mat-autocomplete #auto="matAutocomplete" class="autocomplete">
-                                  <mat-option class="autocomplete" *ngFor="let list of filteredOptions| async" [value]="list" >
-                                      {{list}}
-                                  </mat-option> 
-                                </mat-autocomplete>
-                              </mat-form-field>
+      <form class="example-form" (ngSubmit)="f.form.valid && invitedSuccessfull(successtemplate)" #f="ngForm">
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let item of x;let i=index" (opened)="item.visible=true" (closed)="item.visible=false" [class.expPannel]="item.visible">
+            <mat-expansion-panel-header class="panal-layout" [class.openHeader]="item.visible" (click)="onDeptSelect(item)">
+              <mat-panel-title class="khulaSemiBold" [class.khulaBold]="item.visible">
+                <img src="assets/images/inviteuser/{{item.name.split(' ')[0].toLowerCase()}}.svg" class="acc-image">{{item.name}}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="verifier-box" *ngFor="let role of item.role; let j=index">
+              <div class="verifier-text example-third-width">{{role}}</div>
+              <mat-form-field class="example-half-width example-third-width">
+                  <input matInput class="arrow" placeholder="Primary {{role}}" aria-label="String" [(ngModel)]="model['primary_' + item.id + '_' + role.toUpperCase()]" [name]="'primary_' + item.id + '_' + role.toUpperCase()"  [matAutocomplete]="auto" (focus)="onFocus(role.toLowerCase())" (ngModelChange)="onValChange(model['primary_' + item.id + '_' + role.toUpperCase()], 'primary_' + item.id + '_' + role.toUpperCase())"><span></span>
+                <!-- <input type="text" class="arrow" placeholder="Primary {{role}}" aria-label="String" matInput [matAutocomplete]="auto"> -->
+                <mat-autocomplete #auto="matAutocomplete" class="autocomplete" [displayWith]="displayFn">
+                  <mat-option class="autocomplete" *ngFor="let list of filteredValues" [value]="list">
+                    {{list.name}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
 
-                              <mat-form-field class="example-half-width example-third-width">
-                                <input type="text"  class="arrow"  placeholder="Backup {{role}}" aria-label="String" matInput  [formControl]="dpControl" [matAutocomplete]="auto"><span></span>
-                                <mat-autocomplete #auto="matAutocomplete" class="autocomplete">
-                                  <mat-option *ngFor="let cont of filteredOptions| async" [value]="cont" >
-                                      {{cont}}
-                                  </mat-option>
-                                </mat-autocomplete>
-                              </mat-form-field>
-                          </div>
-                          <!-- <div class="verifier-box">
-                                <div class="verifier-text example-third-width">Checker</div>
-                              <mat-form-field class="example-half-width example-third-width">
-                                <input type="text"  placeholder="Primary Verifier" aria-label="String" matInput  [matAutocomplete]="auto">
-                                <mat-autocomplete #auto="matAutocomplete">
-                                  <mat-option *ngFor="let item of autosearchresult" [value]="item.username" >
-                                      {{item.username}}
-                                  </mat-option>
-                                </mat-autocomplete>
-                              </mat-form-field>
-                              <mat-form-field class="example-half-width example-third-width">
-                                <input type="text"  placeholder="Backup Verifier" aria-label="String" matInput  [matAutocomplete]="auto">
-                                <mat-autocomplete #auto="matAutocomplete">
-                                  <mat-option *ngFor="let item of autosearchresult" [value]="item.username" >
-                                      {{item.username}}
-                                  </mat-option>
-                                </mat-autocomplete>
-                              </mat-form-field>
-                          </div>
-                          <div class="verifier-box">
-                                <div class="verifier-text example-third-width">Approver</div>
-                              <mat-form-field class="example-half-width example-third-width">
-                                <input type="text"  placeholder="Primary Verifier" aria-label="String" matInput  [matAutocomplete]="auto">
-                                <mat-autocomplete #auto="matAutocomplete">
-                                  <mat-option *ngFor="let item of autosearchresult" [value]="item.username" >
-                                      {{item.username}}
-                                  </mat-option>
-                                </mat-autocomplete>
-                              </mat-form-field>
-                              <mat-form-field class="example-half-width example-third-width">
-                                <input type="text"  placeholder="Backup Verifier" aria-label="String" matInput  [matAutocomplete]="auto">
-                                <mat-autocomplete #auto="matAutocomplete">
-                                  <mat-option *ngFor="let item of autosearchresult" [value]="item.username" >
-                                      {{item.username}}
-                                  </mat-option>
-                                </mat-autocomplete>
-                              </mat-form-field>
-                          </div> -->
-                        </mat-expansion-panel>
-                      </mat-accordion>
-                      <!-- <div class="linebottom"></div> -->
-          <button class="btn-orange btn-left">Submit</button>
-        </form>
+              <mat-form-field class="example-half-width example-third-width">
+                  <input matInput class="arrow" placeholder="Backup {{role}}" aria-label="String" [(ngModel)]="model['backup_' + item.id + '_' + role.toUpperCase()]" [name]="'backup_' + item.id + '_' + role.toUpperCase()"  [matAutocomplete]="auto2" (focus)="onFocus(role.toLowerCase())" (ngModelChange)="onValChange(model['backup_' + item.id + '_' + role.toUpperCase()], 'backup_' + item.id + '_' + role.toUpperCase())"><span></span>
+                  <mat-autocomplete #auto2="matAutocomplete" class="autocomplete" [displayWith]="displayFn">
+                    <mat-option class="autocomplete" *ngFor="let list of filteredValues" [value]="list">
+                      {{list.name}}userDepList
+                    </mat-option>
+                  </mat-autocomplete>
+              </mat-form-field>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <!-- <div class="linebottom"></div> -->
+        <button class="btn-orange btn-left">Submit</button>
+      </form>
     </div>
+  </div>
+  <div class="basic-info-wrapper" *ngIf="assignroles">
+      <div class="form-wrapper">
+          <form class="example-form" (ngSubmit)="inviteUser()" #f="ngForm">
+            <div class="inner-form">
+                <div class="row-wrapper">
+                    <mat-form-field class="example-half-width user-tab-width">
+                        <input type="text" class="arrow" required placeholder="Department" aria-label="String" matInput  [matAutocomplete]="auto"  [(ngModel)]="roleDepartmentObj['departmentname'+0]" [name]="'departmentname'"  [matAutocomplete]="auto3" (focus)="onDepFocus()"><span></span>
+                        <mat-autocomplete #auto="matAutocomplete" class="autocomplete" [displayWith]="displayFn.bind(x)">
+                          <mat-option  class="autocomplete" *ngFor="let list of x" [value]="list" >
+                              {{list.name}}
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
+                    <mat-form-field class=" example-half-width user-tab-width">
+                          <input type="text" class="arrow" required placeholder="Role" aria-label="String" matInput  [matAutocomplete]="auto" [(ngModel)]="roleDepartmentObj['userRole']" [name]="'userRole'+0"><span></span>
+                          <mat-autocomplete #auto="matAutocomplete" class="autocomplete" [displayWith]="displayFn">
+                            <mat-option *ngFor="let item of filteredOptions| async" [value]="item" >
+                                {{item}}
+                            </mat-option>
+                          </mat-autocomplete>
+                    </mat-form-field>
+                    <button class="adduser-btn" (click)="deleteDepartment()" ><img class="bin-box"src="assets/images/inviteuser/bin.svg"></button>
+                </div>
+                <div class="row-wrapper" *ngFor="let list of roleDepartmentDetails;let i =index">
+                    <mat-form-field class="example-half-width user-tab-width">
+                        <input type="text" class="arrow" required placeholder="Department" aria-label="String" matInput  [matAutocomplete]="auto" [(ngModel)]="roleDepartmentObj['departmentname'+i-1]" [name]="'departmentname'+i-1"><span></span>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectionChanged($event)">
+                          <mat-option *ngFor="let item of filteredOptions| async" [value]="item" >
+                              {{item}}
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
+                    <mat-form-field class=" example-half-width user-tab-width">
+                          <input type="text" class="arrow" required placeholder="Role" aria-label="String" matInput  [matAutocomplete]="auto" (ngModel)]="roleDepartmentObj['userRole'+i-1]" [name]="'userRole'+i-1"><span></span>
+                          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectionChanged($event)">
+                            <mat-option *ngFor="let item of filteredOptions| async" [value]="item" >
+                                {{item}}
+                            </mat-option>
+                          </mat-autocomplete>
+                    </mat-form-field>
+                    <button class="adduser-btn" (click)="deleteDepartment(i)" ><img class="bin-box"src="assets/images/inviteuser/bin.svg"></button>
+                </div>
+                <div class="add-img-wrapper">
+                 <button class="adduser-btn" (click)="addDepartment()">
+                   <img src="assets/images/inviteuser/addrole.svg"><span class="font14 khulaSemiBold add-role-text">Add Role</span>
+                 </button>
+                </div>
+            </div>
+            <div class="linebottom"></div>
+            <button class="btn-orange btn-left" type="submit">Submit</button>
+          </form>
+      </div>
   </div>
   </div>
   </div>
 </ng-template>
+<!--customer invite popup end -->
 
-
-
+<!-- after invitation  successtemplate template starts-->
 <ng-template #successtemplate class="invite succesmodal">
   <div class=" successpopup">
     <div class="modal-header no-line">
@@ -153,7 +166,7 @@
     <div class="modal-body center-box">
       <img src="assets/images/inviteuser/success.svg">
       <div class="sus-contant-box">
-        <p class="font24 khulaSemiBold success-message">Fusang Customer invited successfully</p>
+        <p class="font24 khulaSemiBold success-message">{{this.msg}}</p>
         <div>
           <button class="invitemore khulaSemiBold" (click)="successRef.hide();inviteCustomer(invitetemplate)">Invitemore</button>
            <button class="btn-orange khulaSemiBold" (click)="successRef.hide()">Done</button>
@@ -162,7 +175,11 @@
     </div>
   </div>
 </ng-template>
+<!--after invitation  successtemplate template starts end -->
 
+
+<!-- signupsuccess successtemplate template starts-->
+<button (click)="signupSuccess(signupsuccess) " class="btn-orange">signup Success</button>
 <ng-template #signupsuccess class="invite succesmodal">
     <div class=" successpopup">
       <div class="modal-header no-line">
@@ -185,10 +202,12 @@
       </div>
     </div>
   </ng-template>
+<!-- signupsuccess successtemplate template end-->
 
 
 
-
+<!-- policyinsights successtemplate template starts-->
+<button (click)="policyInsights(policyinsights) " class="btn-orange">Policy insights</button>
 <ng-template #policyinsights class="invite succesmodal">
 <div>
   <div class="modal-header policyInsightsHeader">
@@ -236,6 +255,12 @@
   </div>
 </div>
 </ng-template>
+<!-- policyinsights successtemplate template end-->
+
+
+
+<!-- complianceinsights successtemplate template start-->
+<button (click)="complianceInsights(complianceinsights) " class="btn-orange">Compliance insights</button>
 <ng-template #complianceinsights class="invite succesmodal">
   <div>
     <div class="modal-header complianceinsightsHeader">
@@ -283,8 +308,12 @@
         </div>
   </div>
 </ng-template>
+<!-- complianceinsights successtemplate template end-->
 
 
+
+<!-- confirmchecking successtemplate template start-->
+<button (click)="confirmChecking(confirmchecking) " class="btn-orange">confirm</button>
 <ng-template #confirmchecking class="invite succesmodal">
     <div class="modal-header">
         <div class="modal-header-wrapper">
@@ -309,9 +338,12 @@
           <button class="btn-orange marg32">Confirm</button>
       </div>
 </ng-template>
+<!-- confirmchecking successtemplate template end-->
 
 
 
+<!-- rejectverification successtemplate template start-->
+<button (click)="rejectVerification(rejectverification) " class="btn-orange">reject</button>
 <ng-template #rejectverification class="invite succesmodal">
     <div class="modal-header">
         <div class="modal-header-wrapper">
@@ -336,3 +368,56 @@
             <button class="btn-orange marg32">Reject</button>
       </div>
 </ng-template>
+<!-- rejectverification successtemplate template end-->
+
+
+<!-- authentication  successtemplate template starts-->
+<button (click)="authPublic(auth) " class="btn-orange">auth</button>
+<ng-template #auth class="invite succesmodal">
+  <div class="invitepopup">
+    <div class="modal-header">
+      <div class="modal-header-wrapper">
+          <div class="modal-header-box font24 khulaSemiBold">Verification</div>
+          <button type="button" class="close font24 pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+    </div>
+    <div class="modal-body invite">
+      <div class="invite-tabs">
+        <div class="Information-box font14 khulaRegular" [class.activeTab]="googleAuth" (click)="showgooleAuth()">Google Auth</div>
+        <div class="Information-box font14 khulaRegular" [class.activeTab]="Yubikey" (click)="showyubikey()">Yubikey</div>
+    </div>
+    <div class="basic-info-wrapper" *ngIf="googleAuth">
+      <div class="form-wrapper">
+          <form class="example-form"  (ngSubmit)="f.form.valid && validate()" #f="ngForm" novalidate>
+              <div class="inner-form">
+                  <div class="modal-header-box font18 khulaSemiBold auth-headding">Google Auth</div>
+                    <mat-form-field class="example-half-width">
+                        <input matInput placeholder="Enter your 6 digit Auth code" required [(ngModel)]="googleCode"  name="authcode" autocomplete="off" maxlength="6" (ngModelChange)="vcValidation($event)">
+                    </mat-form-field>
+              </div>
+              <div class="linebottom"></div>
+              <button class="btn btn-orange" [disabled]="!verificationCodeValid" (click)="validate()">Verify</button>
+              </form>
+      </div>
+    </div>
+    <div class="basic-info-wrapper" *ngIf="Yubikey">
+      <div class="form-wrapper">
+          <form class="example-form"  #f="ngForm" novalidate>
+              <div class="inner-form">
+                  <div class="modal-header-box font18 khulaSemiBold auth-headding">Yubikey</div>
+                  <div> 
+                    <button mat-raised-button class="yubi-btn-outer"><img src="/assets/images/lockedyubi.svg"></button>
+                    <span class="yubi-btn-text khulaRegular">Waiting for yubikey</span>
+                  </div>
+              </div>
+            </form>
+          <div class="linebottom"></div>
+          <button class="btn-orange">Verify</button>
+      </div>
+    </div>
+    </div>
+    </div>
+  </ng-template>
+  <!-- authentication  successtemplate template end-->

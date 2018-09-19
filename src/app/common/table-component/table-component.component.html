@@ -1,0 +1,68 @@
+
+<div class="wholeTableSection">
+  <div class="row tableRow">
+    <div class="col-lg-4 col-md-4 col-sm-4 paddingZero">
+      <h1 class="headingList" *ngIf="hideInticket">Fusang Customers</h1>
+      <h4 class="tableHeading" *ngIf="hideInticket">List of all Fusang Customer</h4>
+      <h1 class="headingList" *ngIf="hideIncustomer">Tickets</h1>
+      <h4 class="tableHeading" *ngIf="hideIncustomer">List of all Tickets</h4>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-8 paddingZero">
+      <div class="row filterDiv">
+        <span class="search" *ngIf="showSearch">
+        <input placeholder="Search" class="search-input">
+        <img class="searchImg" src="./assets/images/search.svg">
+        <img class="searchImg searchImg1" src="./assets/images/search-close.svg">
+      </span>
+      <img src="./assets/images/search-icon.svg" class="searchIcon" *ngIf="!showSearch" (click)="searchClick()">
+
+        <!-- <div class="form-group row">
+            <input type="text"
+            placeholder="Daterangepicker"
+            class="form-control"
+            bsDaterangepicker>
+      </div> -->
+      
+      <span class="search" *ngIf="hideIncustomer">
+      <input type="text"
+      placeholder="Select date range"
+      class="form-control dateInput"
+      bsDaterangepicker>
+      <img class="calImg" src="./assets/images/calendar.svg">
+    </span>
+      <select class="select-dropdown" *ngIf="hideInticket" (change)="statusChange($event.target.value)">
+              <option disabled value='status'>Status</option>
+            <option *ngFor="let StatusList of statusList" value="{{StatusList}}">{{StatusList}}</option>
+            </select>
+        <!-- <select class="select-dropdown" *ngIf="hideIncustomer">
+          <option>Role of user</option>
+        </select> -->
+        <button class="commonButton" (click)="inviteCustomer()" *ngIf="hideInticket">invite</button>
+      </div>
+      </div>
+  </div>
+  <div class="tableSection">
+    <table mat-table [dataSource]="data" matSort class="mat-elevation-z8">
+        <ng-container *ngFor="let column of tableColumns;" matColumnDef="{{column.value}}">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column.name}} </th>
+          <td mat-cell *matCellDef="let element;let i=index" (click)="showOnboarding(i,element)">  
+             <span *ngIf="column.value!== 'status' && column.value!== 'createdDate'">{{element[column.value]}}</span>
+             <!-- <span *ngIf="column.value === 'roles'">
+              <span *ngFor="let role of element[column.value];">{{role}}</span>
+              </span> -->
+              <span *ngIf="column.value === 'createdDate'">{{element[column.value] | date :'dd-MMM-yyyy h:mm:ss '}}</span>
+             <span class="tableStatus {{element[column.value].toLowerCase()}}1" *ngIf="column.value === 'status'">{{element[column.value]}}</span>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+
+<!-- start of invite popup -->
+
+
+
+<!-- end of invite popup -->

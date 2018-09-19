@@ -26,7 +26,7 @@ export class ResetPasswordComponent implements OnInit {
    };
    forgetResponse: any = [];
    public showPasswordCaution = false;
-  constructor(private toastr: ToastrService,
+    constructor(private toastr: ToastrService,
     private router: Router,
     private gs: GeneralService,
     private modalService: BsModalService,
@@ -55,7 +55,7 @@ export class ResetPasswordComponent implements OnInit {
       return false;
     }else {
       this.showPasswordCaution = false;
-      let url = 'auth/resetPassword';//url from API resetPassword
+      let url = 'auth/resetPassword'; //url from API resetPassword
       this.gs.resetPassInfo(url, this.model)
       .subscribe(
         res => {

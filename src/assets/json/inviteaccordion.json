@@ -5,10 +5,7 @@
       "verifier",
       "checker",
       "approver"
-    ],
-    "verifier":["tiwriak31@gmail.com","mahesha@gmail.com","ragav@gmail.com"],
-    "checker":["x@gmail.com","xxx@gmail.com","xx@gmail.com"],
-    "approver":["y@gmail.com","yy@gmail.com","yy@gmail.com"]
+    ]
   },
   {
     "name":"transaction",

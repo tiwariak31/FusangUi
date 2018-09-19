@@ -1,13 +1,16 @@
  .inner-header-box{
    text-align: right;
   margin-right: 10px;
+  width:80%;
+  color: #5a5a5a;
+  font-size: 15px;
   }
 .header_img{
-       width: 32px;
-       height: 32px;
+       width: 40px;
+       height: 40px;
     /* margin-left: 27px; */
     border-radius: 50%;
-    margin-top: 19px;
+    margin-top: 10px;
     cursor: pointer;
 
 }
@@ -36,7 +39,7 @@
     margin: 0 auto;
     height: 60px;
     z-index: 9991;
-  background-color: #457199;
+  background-color: #fff;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
 
 }
@@ -102,6 +105,11 @@ ul#dropdown-basic {
   padding: 5px 8px;
   outline: none;
   padding-bottom: 0px;
+}.select-profile{
+  padding: 0px 8px;
+  outline: none;
+  margin-top: -10px;
+  /* padding-bottom: 0px; */
 }
 ul#dropdown-basic.form-control{
   height: inherit;
@@ -121,7 +129,7 @@ ul#dropdown-basic.form-control{
 }
 .profilePic{
    margin-right: 5px;
-   margin-top: -1px;
+   margin-top: 14px;
 }
 .userName{
     font-family: khula-lite;
@@ -189,13 +197,13 @@ ul#dropdown-basic.form-control{
     left: 42px; */
     border: none;
     background-color: transparent;
-    color: white;
+    color: #4a4a4a;
     font-size: 14px;
     cursor: pointer;
 }
 .notification{
-  width:26px;
-  height:26px;
+  width:40px;
+  height:40px;
 }
 .displayInline{
   display:inline-block;
@@ -203,10 +211,45 @@ ul#dropdown-basic.form-control{
 }
 .currency-positioin{
   position: relative;
-  top: 7px;
-  margin-left: 7px;
+  top: 4px;
+  margin-left: 27px;
   margin-right: 7px;
 
+}
+sub.subrole{
+  color:#6fadf5;
+  position: absolute;
+  left: 63px;
+  top: 34px;
+  text-transform: capitalize;
+}
+.header-wrapper{
+display: flex;
+}
+
+.header-text {
+  vertical-align: middle;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+.notification-count{
+  position: absolute;
+  color: white;
+  bottom: 0px;
+  right: -4px;
+  background: #e31932;
+  border-radius: 50%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  font-family: Khula-semibold;
+  padding: 4px 3px;
+  height: 18px;
+  width: 18px;
+  font-size: 9px;
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
 }
 @media screen and (max-width: 1440px) and (min-width: 1025px){
   /* .inner-header-box{

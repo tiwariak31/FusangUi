@@ -7,7 +7,7 @@
 		<div class="col-md-6 signRight">
 			<!-- <div class=""> -->
 				<div class="get_form_innerSignUp">
-					<form name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate  class="notmaterial">
+					<form name="form" (ngSubmit)="f.form.valid && register(signupsuccess)" #f="ngForm" novalidate  class="notmaterial">
 
 						<div class="fus-name">
 							<div class="group">
@@ -27,7 +27,7 @@
 							/>
 							<label class="lableTop">Email Address</label>
 						</div>
-						<div class="group" [ngClass]="{ 'has-error': f.submitted && !searchVal.valid}">
+						<div class="group" [ngClass]="{ 'has-error': f.submitted}">
 							<ng-select [(ngModel)]="selectedcountrylist" placeholder="Country" (change)="countrySelected($event)" (clear)="countrySelected($event)" [closeOnSelect]="true"
 							 [clearable]="false" [hideSelected]="false" name="serchValue" #selectedcountry="ngModel" required>
 							 <ng-option *ngFor="let item of countrylist" [value]="item">{{item.name}}</ng-option>
@@ -144,3 +144,26 @@
 		</div>
 	</div>
 </div>
+<ng-template #signupsuccess class="invite succesmodal">
+    <div class=" successpopup">
+      <div class="modal-header cus-modal-header no-line">
+        <div class="modal-header-wrapper">
+            <div class="modal-header-box font24 khulaSemiBold"></div>
+            <button type="button" class="close font24 pull-right" aria-label="Close" (click)="signupsuccessRef.hide()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      </div>
+      <div class="modal-body center-box">
+        <img src="assets/images/inviteuser/success.svg">
+        <div class="sus-contant-box">
+		  <p class="font24 khulaSemiBold success-message">{{msg}}</p>
+		  <!-- Your Registration <span class="c-orange">Completed Successfully !</span> -->
+          <p class=" khulaRegular c-s-text">Please wait for your account verification from Fusang team</p>
+          <div>
+             <button class="btn-orange khulaSemiBold" (click)="signupsuccessRef.hide()">Ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</ng-template>

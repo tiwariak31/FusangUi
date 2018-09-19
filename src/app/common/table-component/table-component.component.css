@@ -1,0 +1,75 @@
+.search{
+  position: relative;
+}
+.search-input{
+  width: 179px;
+border-radius: 4px;
+border: solid 0.5px #cccccc;
+padding: 7px 28px 3px;
+margin-right: 12px;
+font-size: 14px;
+font-family: "khula-semiBold";
+color: #687178;
+background-color: transparent;
+}
+.searchImg{
+  position: absolute;
+  top:10px;
+  bottom: 8px;
+  left:8px;
+}
+.searchImg1{
+  left: 84%;
+  top: 12px;
+}
+.select-dropdown{
+  border-radius: 4px;
+  border: solid 0.5px #cccccc;
+  padding: 3px 40px 2px 9px;
+  color: #687178;
+  font-size: 14px;
+  margin-right: 12px;
+  font-family: "khula-semiBold";
+  background-color: transparent;
+  appearance: none;
+  background-image: url('../../../assets/images/filled-dropdown.svg');
+  background-repeat: no-repeat;
+  background-position: 90% 7px;
+  height: 31px;
+}
+.filterDiv{
+  justify-content: flex-end;
+}
+.headingList{
+  font-family: "khula-semiBold";
+  font-size: 24px;
+  color: #4a4a4a;
+}
+.tableHeading{
+  font-family: "khula-semiBold";
+  font-size: 12px;
+  color: #4a4a4a;
+}
+.searchIcon{
+  margin-right: 12px;
+  cursor: pointer;
+}
+.dateInput{
+  width: 150px;
+  height: 30px;
+  border-radius: 4px;
+  border: solid 0.5px #cccccc;
+  padding-left: 30px;
+  background-color: transparent;
+  color: #687178;
+  font-family: "khula-semiBold";
+  font-size: 14px;
+}
+.calImg{
+  position: absolute;
+  left: 8px;
+  top: 8px;
+}
+
+
+ 

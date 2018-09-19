@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { GeneralService } from '../../../general.service';
 import { SharedService } from '../../../shared.service';
 import { ToastrService } from 'ngx-toastr';
-import { NgForm } from '../../../../../node_modules/@angular/forms';
+import { NgForm } from '@angular/forms';
 import {FormBuilder, FormGroup} from '@angular/forms';
 @Component({
   selector: 'app-wallet-creat-info',
@@ -352,7 +352,7 @@ export class WalletCreatInfoComponent implements OnInit {
               res => {
                 this.response = res['data'];
                 // this.showPageLoading = false;
-                this.ss.ToasterMessage(this.response);
+                this.ss.ToasterMessage(res['message']);
                       document.getElementById('modalButton').click();
                 this.router.navigateByUrl('/fusang/walletcreate');
               },

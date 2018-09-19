@@ -6,27 +6,29 @@
   <div class="col-md-2">
   </div> -->
 
-  <div class="col-md-12">
+  <div class="col-md-12 header-wrapper">
+    <span class="header-text khulaSemobold">Custodian Service Platform</span>
     <div class="inner-header-box">
-    <div class="btn-group currency-positioin displayInline" dropdown>
-      <button id="button-basic" dropdownToggle type="button" class=" dropdown-toggle select-coin currencydp" aria-controls="dropdown-basic">Currency
-      </button>
-      <ul id="dropdown-basic" name="Currency" *dropdownMenu class="dropdown-menu form-control " role="menu" aria-labelledby="button-basic">
+    <!-- <div class="btn-group currency-positioin displayInline" dropdown> -->
+      <!-- <button id="button-basic" dropdownToggle type="button" class=" dropdown-toggle select-coin currencydp" aria-controls="dropdown-basic">Currency -->
+      <!-- </button> -->
+      <!-- <ul id="dropdown-basic" name="Currency" *dropdownMenu class="dropdown-menu form-control " role="menu" aria-labelledby="button-basic"> -->
         <!-- <li role="menuitem" *ngFor="let item of countrylist" (click)="countrySelected(item.name,item.dial_code)">{{item.name}}</li> -->
-        <li>United States Dollar</li>
+        <!-- <li>United States Dollar</li> -->
         <!-- <li>Hong Kong Dollar</li> -->
-      </ul>
-    </div>
+      <!-- </ul> -->
+    <!-- </div> -->
     <div class="displayInline">
       <span>
         <img class="header_img notification" src="./assets/images/sidebar/notification.png">
       </span>
+      <span class="notification-count">02</span>
     </div>
 
 
     <div class="btn-group currency-positioin displayInline" dropdown>
-        <button id="button-basic" dropdownToggle type="button" class=" dropdown-toggle select-coin currencydp" aria-controls="dropdown-basic">
-            <img id="loggedInImage" src="{{imageUrl}}" class="header_img profilePic">{{userName}}
+        <button id="button-basic" dropdownToggle type="button" class=" dropdown-toggle select-profile currencydp" aria-controls="dropdown-basic">
+            <img id="loggedInImage" src="{{imageUrl}}" class="header_img profilePic">{{userName}}<sub class="subrole">{{role}}</sub>
         </button>
         <ul id="dropdown-basicprofile" name="Profile" *dropdownMenu class="dropdown-menu form-control " role="menu" aria-labelledby="button-basic">
           <li id="profile">

@@ -182,6 +182,7 @@ export class GeneralService {
   }
 
   fileuploadService(url, req) {
+    this.ss.showLoading(true);
     const urlParam  =  this.ServerUrl  +  ''  + url;
     return this.http
       .post(urlParam, req, {
@@ -261,6 +262,29 @@ resetPassInfo(url, req) {
   const urlParam  =  this.ServerUrl  +  ''  + url;
   return this.http
       .post(urlParam, req, {
+        headers: this.postRegisterHeaders(),
+        // withCredentials: true
+      })
+      .pipe(
+        map((data: Response) => {
+          this.ss.showLoading(false);
+          return data;
+          // this.ss.showLoading = false;
+        },
+        this.showPageLoading = false,
+      ),
+      catchError((error: HttpErrorResponse) => {
+        this.ss.showLoading(false);
+        return this.handleError(error);
+      })
+    );
+}
+
+getUserType(url) {
+  this.ss.showLoading(true);
+  const urlParam  =  this.ServerUrl  +  ''  + url;
+  return this.http
+      .post(urlParam, {
         headers: this.postRegisterHeaders(),
         // withCredentials: true
       })

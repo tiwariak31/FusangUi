@@ -26,7 +26,13 @@ import { WalletCreatInfoComponent } from './home/userdashboard/wallet-creat-info
 import { UserProfileComponent } from './home/userdashboard/user-profile/user-profile.component';
 import { ForgetPasswordComponent } from './onboarding/forget-password/forget-password.component';
 import { ResetPasswordComponent } from './onboarding/reset-password/reset-password.component';
+import { CustomersComponent } from './home/customers/customers.component';
 import { InviteCustomersComponent } from './home/users/invite-customers/invite-customers.component';
+import { OnboardflowComponent } from './home/onboardflow/onboardflow.component';
+import { PloicyConfigComponent } from './home/ploicy-config/ploicy-config.component';
+import { UserTypeComponent } from './onboarding/user-type/user-type.component';
+import { GlobalPolicyComponent } from './common/global-policy/global-policy.component';
+import { TicketComponent } from './home/ticket/ticket.component';
 const routes: Routes = [
   { path: '', component: SignInComponent },
   { path: 'sign-up', component: SignUpComponent },
@@ -34,11 +40,21 @@ const routes: Routes = [
   { path: 'yubikey-authentication', component: YubikeyComponent},
   { path: 'google-authentication', component: GoogleAuthComponent},
   { path: 'forget-password', component: ForgetPasswordComponent},
-  {path:'reset-password',component:ResetPasswordComponent},
+  {path: 'reset-password', component: ResetPasswordComponent},
   { path: 'onboarding-authentication', component: OnboardingComponent},
   { path: 'termcondition', component: TermsConditionComponent },
-  {path: 'invite-customers', component:InviteCustomersComponent},
+  {path: 'invite-customers', component: InviteCustomersComponent},
       // { path: 'walletcreate-info', component: WalletCreatInfoComponent},
+  { path: 'usertype', component: UserTypeComponent},
+      { path: 'golbalpolicy', component: GlobalPolicyComponent},
+      // {
+      //   path: 'onbording',
+      //   component: OnboardflowComponent
+      // },
+      // {
+      //   path: 'personalwallet',
+      //   component: PersonalWalletComponent
+      // },
   {
     path: 'fusang',
     component: HomeComponent,
@@ -67,6 +83,22 @@ const routes: Routes = [
       {
         path: 'userProfile',
         component: UserProfileComponent
+      },
+      {
+        path: 'onboarding',
+        component: OnboardflowComponent
+      },
+      {
+        path: 'customers',
+        component: CustomersComponent
+      },
+      {
+        path: 'policy',
+        component: PloicyConfigComponent
+      },
+      {
+        path: 'ticket',
+        component: TicketComponent
       },
          ]
   },

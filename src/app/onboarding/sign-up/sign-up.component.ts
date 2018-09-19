@@ -1,4 +1,4 @@
-import { Component, OnInit , TemplateRef } from '@angular/core';
+import { Component, OnInit , TemplateRef, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
@@ -13,7 +13,8 @@ import { SharedService } from '../../shared.service';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent implements OnInit, OnDestroy {
+ 
   // signupForm: FormGroup;
   submitted = false;
   countrylist: any = [];
@@ -32,7 +33,6 @@ export class SignUpComponent implements OnInit {
     lastName: '',
     phoneNumber: '',
     repassword: '',
-    searchVal : '',
     password: ''
   };
   itemValue = {
@@ -40,6 +40,9 @@ export class SignUpComponent implements OnInit {
     'userEmailid': '',
     'userrole': ''  };
     public showPasswordCaution = false;
+  getmodeldata: any;
+  signupsuccessRef: BsModalRef;
+  msg: any='testr';
   constructor(private router: Router,
      private modalService: BsModalService,
       private gs: GeneralService,
@@ -49,21 +52,24 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit() {
     this.getcountrylist();
-    let loc, id, firstName, username;
-    loc = location.href;
-    id = loc.split('?')[1].split('id=')[1].split('&')[0];
-    firstName = loc.split('?')[1].split('firstName=')[1].split('&')[0];
-    username = loc.split('?')[1].split('username=')[1].split('&')[0];
+    // let loc, id, firstName, username;
+    // loc = location.href;
+    // id = loc.split('?')[1].split('id=')[1].split('&')[0];
+    // firstName = loc.split('?')[1].split('firstName=')[1].split('&')[0];
+    // username = loc.split('?')[1].split('username=')[1].split('&')[0];
 
-    this.model.id = id;
-    this.model.firstName = firstName;
-    this.model.username = username;
+    let getmodeldata=JSON.parse( sessionStorage.getItem('model'));
+    console.log(getmodeldata);
+    this.model.id= getmodeldata.id;
+    this.model.userTypeId = getmodeldata.userTypeId;
+    this.model.firstName = getmodeldata.firstName;
+    this.model.username = getmodeldata.username;
 
    }
    public focusFunction(element) {
     this.focusedElement = element;
   }
-  register() {
+  register(signupsuccess) {
     if (this.ss.validVal(this.model.country)) {
       this.errmsg = false;
     } else {
@@ -86,17 +92,22 @@ export class SignUpComponent implements OnInit {
         if (this.invalidphone === true) {
           this.invalidphone = true;
         } else {
+          console.log(this.model);
           this.invalidphone = false;
           this.gs.loginService('auth/signup', this.model)
       .subscribe(
         res => {
-          // if (res['statusMessage'] === 'FAILURE') {
-          //   this.toastr.error(res['message']);
-          // } else {
-            this.ss.ToasterMessage(res['data']);
+          if (res.status.toString() === 'failure') {
+            this.msg = res['message'];
+            this.signupSuccess(signupsuccess);
+            // this.toastr.error(res['message']);
+           } else {
+            this.msg=res['message'];
+            this.signupSuccess(signupsuccess);
+            // this.ss.ToasterMessage(res['data']);
             document.getElementById('modalButton').click();
-            this.router.navigate(['/sign-in']);
-          // }
+            // this.router.navigate(['/sign-in']);
+           }
         },
         e => {
           this.ss.ToasterMessage(e['message']);
@@ -188,4 +199,12 @@ export class SignUpComponent implements OnInit {
       this.showPasswordCaution = false;
     }
   }
+  signupSuccess(signupsuccess: TemplateRef<any>){
+    this.signupsuccessRef = this.modalService.show(signupsuccess,Object.assign({}, { class: 'invite-cus-pop modal-lg' }));
+  }
+
+  ngOnDestroy(){
+    
+  }
+
 }

@@ -17,6 +17,10 @@ text-align: center;
     color: #3954e5;
     border-bottom: solid 1px #e6ecf3;
 }
+.auth-headding{
+    color: #3954e5;
+    margin-left: 2.5%;
+}
 .modal-header-box{
     flex-grow:2;
 }
@@ -154,6 +158,7 @@ text-align: center;
 }
 .success-message{
 color: #5a5a5a;
+text-transform: capitalize;
 }
 .sus-contant-box{
     margin-top: 26px;
@@ -286,4 +291,52 @@ span.denger-color.khulaSemiBold.font14.date {
 }
 .rejectPadding{
     padding: 25px 0px;
+}
+.tabDesabled{
+    pointer-events: none;
+}
+
+
+.yubi-btn-outer{
+    padding: 3px 75px;
+}
+.yubi-btn-text{
+    display: block;
+    color: #de792f;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 12px;
+}
+
+
+
+/* user section */
+.row-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.user-tab-width {
+    width: 43%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+}
+img.bin-box {
+    width: 12px;
+    margin-left: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.add-img-wrapper{
+    padding: 0px 15px 30px 15px;
+}
+.add-role-text{
+    color: #3954e5;
+    margin-left: 15px;
+}
+.adduser-btn {
+    border: none;
+    background: #fff;
+    cursor: pointer;
+    outline: none;
 }

@@ -5,7 +5,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { DatePipe } from '@angular/common';
 import { SharedService } from '../../../shared.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgForm } from '../../../../../node_modules/@angular/forms';
+import { NgForm } from '@angular/forms';
 // import * as c3 from 'c3';
 import { ToastrService } from 'ngx-toastr';
 import { Chart } from 'angular-highcharts';
@@ -30,6 +30,7 @@ export class PersonalWalletComponent implements OnInit {
   userdiv: Boolean = false;
   settingdiv: Boolean = false;
   auditdiv: Boolean = false;
+  taskdiv: Boolean = false;
   walletDetails: any = {
     walletName: '',
     ownerId: '',
@@ -75,6 +76,15 @@ export class PersonalWalletComponent implements OnInit {
   avaragePrice: any = '';
   ownerId: any = '';
   updateeResponse: any = [];
+  tasklistinfo: any = [];
+  confirmRef: BsModalRef;
+  reject: any = '';
+  approve: any = '';
+  transactionDetailsStatus: any = [];
+  signerStatus: any = [];
+  usd: any = '';
+  ticketstatus: any = [];
+  transactionlist: any = [];
   constructor(private _domSanitizer: DomSanitizer,
     private router: Router, private genaralservice: GeneralService, private formBuilder: FormBuilder,
     private ss: SharedService, private modalService: BsModalService, private datePipe: DatePipe, private toastr: ToastrService) {
@@ -86,7 +96,76 @@ export class PersonalWalletComponent implements OnInit {
     }
 
   }
+  'data':
+    {
+      'ticketStatus': 'Close',
+      'firstName': 'harish',
+      'transactionRequestId': 1,
+      'amount': '0.2',
+      'transactionDetailsStatus': 'Completed',
+      'toaddress': 'trywywrywtrywt'
+    };
+    transactionsettings = {
+      mode : 'inline',
+          hideSubHeader : true,
+          pager: {
+              display: true,
+              perPage: 10,
+          },
+          delete : {
+              confirmDelete : true
+          },
+          actions: false,
+      columns: {
+    //     profilePic: {
+    //       title: '',
+    //       width: '20px',
+    //     filter: false,
+    //     type: 'html',
+    //     valuePrepareFunction: (profilePic) => {
+    //       return this._domSanitizer.bypassSecurityTrustHtml(`<img src="${profilePic}" alt="Smiley face" height="32" width="32"
+    //       style="border-radius: 50%">`);
+    //   }
+    // },
+    // firstName: {
+    //       title: 'Initiated By',
+    //       type: 'html',
+    //     },
+        // id: {
+        //   title: 'ID'
+        // },
+        // transactionId: {
+        //   title: 'Transaction Id',
+        // },
+        toAddress: {
+          // editable: false,
+          title: 'To/From Address',
+        },
+        createdDate: {
+          // editable: false,
+          title: 'Created Date',
+          valuePrepareFunction: (value) => {
+            //   value = this.CBBdata
+              return this.dateFormat(value);
+           
+          }
+        },
+        amount: {
+          // editable: false,
+          title: 'BTC'
+        },
 
+
+        type: {
+          title: 'Type',
+          type: 'html',
+        },
+        transactionStatus: {
+          title: 'Status',
+          type: 'html',
+        }
+      }
+    };
   ngOnInit() {
     this.genaralservice.getBitCoin('https://blockchain.info/ticker')
       .subscribe(
@@ -103,6 +182,12 @@ export class PersonalWalletComponent implements OnInit {
     this.getTransactionDetails();
     this.showtransaction();
     this.btcexchangerate();
+    this.gettasklist();
+    this.getTransactionList();
+  }
+  public dateFormat(date){
+    const d = new Date(date);
+    return d.toLocaleString();
   }
 
   public focusFunction(element) {
@@ -169,7 +254,16 @@ export class PersonalWalletComponent implements OnInit {
         title: 'Email ID',
       },
       role: {
-        title: 'Role'
+        title: 'Role',
+        type: 'html',
+        valuePrepareFunction: (value) => {
+          //   value = this.CBBdata
+          if (value === 'ADMIN') {
+            return `Signer`;
+          } else if (value === 'USER') {
+            return `Viewer`;
+          }
+        }
       },
       status: {
         title: 'Status',
@@ -181,6 +275,51 @@ export class PersonalWalletComponent implements OnInit {
           } else if (value === 'Invited') {
             return `<img src='assets/images/dashboard/Critical.png' > InActive`;
           }
+        }
+      }
+    }
+  };
+  // tslint:disable-next-line:member-ordering
+  tasksetting = {
+    mode: 'external',
+    hideSubHeader: true,
+    pager: {
+      display: false,
+      perPage: 20,
+    },
+    actions: false,
+    columns: {
+      fromAddress: {
+        title: 'Initiated By'
+      },
+      toAddress: {
+        title: 'To Address'
+      },
+      amount: {
+        title: 'Amount'
+      },
+      ticketStatus: {
+        title: 'Ticket Status',
+        type: 'html',
+        valuePrepareFunction: (value) => {
+          //   value = this.CBBdata
+          if (value === 'Open') {
+            return this._domSanitizer.bypassSecurityTrustHtml
+            (`<button style='border:none;border-radius:3px;background-color:#e6c10b;color:white' (click)="approved()">pending</button>`);
+          } else if (value === 'Close') {
+            return  this._domSanitizer.bypassSecurityTrustHtml
+             (`<button style="border:none;border-radius:3px;background-color:#56ac17;color:white">Approved</button>`);
+          } else if (value === 'Rejected') {
+            return this._domSanitizer.bypassSecurityTrustHtml
+            (`<button style="border:none;border-radius:3px;background-color:#ea1c49;color:white">Rejected</button>`);
+          }
+        }
+      },
+      createdDate: {
+        title: 'Time',
+        type: 'html',
+        valuePrepareFunction: (value) => {
+          return value = this.datePipe.transform(value, 'dd-MM-yyyy HH:mm');
         }
       }
     }
@@ -214,17 +353,20 @@ export class PersonalWalletComponent implements OnInit {
 
 
   // tslint:disable-next-line:member-ordering
+
   showtransaction() {
     this.transdiv = true;
     this.userdiv = false;
     this.settingdiv = false;
     this.auditdiv = false;
+    this.taskdiv = false;
   }
   showusers() {
     this.transdiv = false;
     this.userdiv = true;
     this.settingdiv = false;
     this.auditdiv = false;
+    this.taskdiv = false;
   }
   showsettings() {
     this.transdiv = false;
@@ -237,6 +379,14 @@ export class PersonalWalletComponent implements OnInit {
     this.userdiv = false;
     this.settingdiv = false;
     this.auditdiv = true;
+    this.taskdiv = false;
+  }
+  showtasklist() {
+    this.transdiv = false;
+    this.userdiv = false;
+    this.settingdiv = false;
+    this.auditdiv = false;
+    this.taskdiv = true;
   }
 
   coinSelected(item) {
@@ -306,21 +456,24 @@ export class PersonalWalletComponent implements OnInit {
     const url = 'wallet/transaction/transfer';
     const obj = {
       'walletId': this.walletid, 'toAddress': this.itemVlue.toaddress, 'coins': this.itemVlue.coin, 'note': this.itemVlue.note,
-      'userId' : this.ownerId,
+      'userId' : this.ownerId, 'balanceAmount': this.walletDetails.balanceBtc,
     };
     this.genaralservice.generalServiceInfo(url, 'post', obj)
       .subscribe(
         res => {
           this.tractionsstatus = res;
-          if (this.tractionsstatus.message === 'Sucess') {
-            this.message = this.tractionsstatus.data;
-            this.ss.ToasterMessage(this.tractionsstatus['data']);
+          const response: any = res.status;
+          if (response === 'success') {
+            // this.message = this.tractionsstatus.data;
+            // this.ss.ToasterMessage(this.tractionsstatus.message);
+            // document.getElementById('modalButton').click();
+            this.ss.ToasterMessage(res['message']);
             document.getElementById('modalButton').click();
             this.getTransactionDetails();
             this.modalRef.hide();
 
           } else {
-            this.ss.ToasterMessage(this.tractionsstatus['data']);
+            this.ss.ToasterMessage(this.tractionsstatus.message);
             document.getElementById('modalButton1').click();
             this.itemVlue.toaddress = '';
             this.itemVlue.coin = '';
@@ -357,9 +510,16 @@ export class PersonalWalletComponent implements OnInit {
     this.genaralservice.generalServiceInfo(url, 'post', obj)
       .subscribe(
         res => {
-          this.updateeResponse = res['data'];
-          this.ss.ToasterMessage(this.updateeResponse);
-          document.getElementById('modalButton').click();
+          const response: any = res.status;
+          if (response === 'success') {
+            this.updateeResponse = res['data'];
+            this.ss.ToasterMessage(res['message']);
+            document.getElementById('modalButton').click();
+
+          } else {
+            this.ss.ToasterMessage(res['message']);
+            document.getElementById('modalButton1').click();
+           }
         },
         e => {
         },
@@ -379,9 +539,9 @@ export class PersonalWalletComponent implements OnInit {
       .subscribe(
         res => {
           this.transactionInfo = res['data'];
-          if (this.transactionInfo['items'] !== undefined) {
-            this.transactions = this.transactionInfo['items'];
-          }
+          // if (this.transactionInfo['items'] !== undefined) {
+          //   this.transactions = this.transactionInfo['items'];
+          // }
         },
         e => {
           if (e.status === 403) {
@@ -505,5 +665,115 @@ export class PersonalWalletComponent implements OnInit {
   }
   onCustom(event) {
     alert('tets');
+  }
+  // geting task list for wallet admins
+  gettasklist() {
+    const url = 'wallet/transaction/ApproveList';
+    const obj = {
+      'walletId' : this.walletid
+      // 'walletId' : 1
+    };
+    this.genaralservice.generalServiceInfo(url, 'post', obj)
+                        .subscribe(
+                          res => {
+                            this.tasklistinfo = res['data'];
+                            console.log(this.tasklistinfo);
+                          },
+                          e => {
+                          },
+                          () => {
+                          }
+                        );
+  }
+  approved() {
+alert('test');
+console.log('test');
+  }
+  onUserRowSelect(value , confirmchecking: TemplateRef<any>) {
+    this.transactionDetailsStatus = value['data'];
+    this.usd = this.oneUsdvalue * this.transactionDetailsStatus.amount;
+    if (this.transactionDetailsStatus.ticketStatus === 'Open') {
+      this.confirmRef = this.modalService.show(confirmchecking, Object.assign({}, { class: 'invite-cus-pop modal-lg' }));
+    }
+  }
+  updateDetail() {
+    const obj = {
+      'transactionRequestId': this.transactionDetailsStatus.transactionRequestId,
+      'note': this.approve,
+  'ticketStatus': this.ticketstatus,
+    };
+    const url = 'wallet/transaction/approve';
+    console.log(obj);
+    this.genaralservice.generalServiceInfo(url, 'post', obj)
+                      .subscribe(
+                        res => {
+                          const response: any = res.status;
+                          console.log(response);
+                          if ( response === 'success') {
+                          this.signerStatus = res['data'];
+                            this.ss.ToasterMessage(res['message']);
+                            document.getElementById('modalButton').click();
+                            this.confirmRef.hide();
+                          this.gettasklist();
+                          this.transdiv = true;
+                          this.taskdiv = false;
+                          console.log(res);
+                          console.log(this.signerStatus);
+
+                          }
+                        },
+                        e => {
+                        },
+                        () => {
+                        }
+                      );
+  }
+  rejecttask() {
+    this.ticketstatus = 'Reject';
+    this.updateDetail();
+  }
+  approvetask() {
+    this.ticketstatus = 'Close';
+    this.updateDetail();
+  }
+    getTransactionList() {
+    const obj = {
+      'page': 0,
+      'size': 0,
+      'walletId': this.walletid
+    };
+    const url = 'wallet/transaction/list';
+    this.genaralservice.generalServiceInfo(url, 'post', obj)
+      .subscribe(
+        res => {
+          if (this.ss.validVal(res['data'])) {
+          this.transactionlist = res['data'];
+          this.transactionlist.forEach(element => {
+            if ( element['profilePic'] === null) {
+              element['profilePic'] = './assets/images/sidebar/profile.png';
+                }
+          });
+
+          } else {
+            this.transactionlist = [];
+          }
+          console.log(this.transactionlist);
+          // if (this.transactionInfo['items'] !== undefined) {
+          //   this.transactions = this.transactionInfo['items'];
+          // }
+        },
+        e => {
+          if (e.status === 403) {
+            this.router.navigate(['']);
+            this.ss.ToasterMessage('Your Session has Expired');
+            document.getElementById('modalButton1').click();
+            sessionStorage.removeItem('firstLogin');
+            sessionStorage.removeItem('useremailid');
+            sessionStorage.removeItem('accessToken');
+          }
+        },
+        () => {
+        }
+      );
   }
 }

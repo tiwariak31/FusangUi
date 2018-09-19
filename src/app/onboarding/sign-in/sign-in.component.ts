@@ -44,23 +44,28 @@ export class SignInComponent implements OnInit {
     this.gs.loginService('auth/signin', this.model)
       .subscribe(
         res => {
-          this.loginResponse = res['data'];
-          window.sessionStorage.setItem('useremailid', this.model.username);
+          const response: any = res.status;
+          console.log(response);
+          if ( response === 'success') {
+            this.loginResponse = res['data'];
+            window.sessionStorage.setItem('useremailid', this.model.username);
           this.ss.setToken(this.loginResponse['accessToken']);
           this.ss.FirstLogin(this.loginResponse);
-          this.ss.ToasterMessage(this.loginResponse.message);
+          this.ss.ToasterMessage(res['message']);
           document.getElementById('modalButton').click();
+          if (this.loginResponse['authType'] === 1) {
+            this.router.navigate(['/yubikey-authentication']);
+          } else {
+            this.router.navigate(['/google-authentication']);
+          }
+          } else if (response === 'failure') {
+            this.ss.ToasterMessage(res['message']);
+          document.getElementById('modalButton1').click();
+          }
           // if (res['statusMessage'] === 'SUCCESS') {
             // this.toastr.success(this.loginResponse.message);
             // this.modalRef = this.modalService.show(this.successMessage);
             // this.toasterModalComponent.showSuccess();
-            if (this.loginResponse['authType'] === 1) {
-              this.router.navigate(['/yubikey-authentication']);
-            } else {
-              this.router.navigate(['/google-authentication']);
-            }
-
-
             // else if (this.loginResponse['authType'] === 2 && this.loginResponse['isFirstLogin'] === 2) {
             //   sessionStorage.removeItem('firstLogin');
             //   this.ss.FirstLogin(this.loginResponse);
@@ -88,5 +93,8 @@ export class SignInComponent implements OnInit {
         }
       );
 
+  }
+  forgetPassLink(){
+    this.router.navigate(['/forget-password']);
   }
 }

@@ -1,0 +1,179 @@
+<div class="row">
+    <div class="col-md-12">
+      <div class="header">
+        <div class="logo-wraper">
+          <img src="assets/images/logoblue/logoblue.jpg" class="logo">
+        </div>
+        <div class="user-wraper">
+          <img id="loggedInImage" src="assets/images/kim/kim.jpg" class="user-picture">
+          <label>Username
+            <span class="fa fa-angle-down"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 row">
+    
+      <div class="col-md-4"></div>
+      <div class="col-md-4"><label class="Select-User-Type">Select Client Type</label></div>
+    
+    </div>
+
+  <div class="col-md-12 row">
+      <div class="col-md-1"></div>
+      <div class="col-md-3 cardstlye">
+          <div class="col-md-12 row securestorage-image">
+              <div class="col-md-12 row">
+            <div class="col-md-10 headertext row">
+               SECURE STORAGE
+            </div>
+            <div class="col-md-2">
+                <img src="./assets/images/userpolicy/information.png" class="information" >
+              </div>
+            </div>
+            <div class="col-md-12 row">
+                <img src="./assets/images/userpolicy/securestorage.png" class="database" >
+            </div>
+          </div>
+          <div class="col-md-12 row thrddivstyle">
+              <div class="col-md-12 row rowclss">
+                <label class="text-style-1" ><img src="./assets/images/userpolicy/transaction-hours.png" class="editicon">&nbsp;Transaction hours</label>
+                <label class="datastyle">{{secureStorage.transactionTimeStart}}&nbsp;&nbsp;to&nbsp;&nbsp;{{secureStorage.transactionTimeEnd}}</label>
+              </div>
+              <div class="col-md-12 row rowclss">
+                  <label class="text-style-1" ><img src="./assets/images/userpolicy/ip-address.png" class="editicon">&nbsp;Maximum allowed IPs</label>
+                  <label class="datastyle">{{secureStorage.maximumAllowedIp}}</label>
+                </div>
+                <div class="col-md-12 row rowclss">
+                  <label class="text-style-1" ><img src="./assets/images/userpolicy/wallet-address.png" class="editicon">&nbsp;Maximum allowed wallets</label>
+                  <label class="datastyle">{{secureStorage.maximumAllowedWallets}}</label>
+                </div>
+                <div class="col-md-12 row rowclss">
+                    <label class="text-style-1" ><img src="./assets/images/userpolicy/transaction-volume.png" class="editicon">&nbsp;Transaction Max Allowed Volume Cap</label>
+                    <label class="datastyle">{{secureStorage.transactionVolumeCap}}%</label>
+                  </div>
+                  <div class="col-md-12 row rowclss">
+                      <label class="text-style-1" ><img src="./assets/images/userpolicy/frequency-cap.png" class="editicon">&nbsp;Max Allowed Freq Cap </label>
+                      <label class="datastyle">{{secureStorage.transactionLimit}} &nbsp; Per day</label>
+                    </div>
+                    <div class="col-md-12 row rowclss">
+                        <label class="text-style-1" ><img src="./assets/images/userpolicy/new-device.png" class="editicon">&nbsp;Transaction Mimimum Balance </label>
+                        <label class="datastyle">{{secureStorage.minimumBalance}}%</label>
+                      </div>
+                    <div class="col-md-12 row rowclss">
+                      <label class="text-style-1" ><img src="./assets/images/userpolicy/new-device.png" class="editicon">&nbsp;Transaction Unit of measure </label>
+                      <label class="datastyle">Per&nbsp;{{secureStorage.transactionUnitOfMeasure}}&nbsp;mins</label>
+                    </div>
+
+                        <div class="col-md-12 row rowclss">
+                        
+                          <button type="submit" class="selectbtn" (click)="gotosignup(secureStorageId)">SELECT</button>
+                        </div>
+            </div>
+          
+      </div>
+      <div class="col-md-3 cardstlye">
+          <div class="col-md-12 row  deepstorage-image" >
+            <div class="col-md-12 row">
+              <div class="col-md-10 headertext row">
+                  DEEP STORAGE
+              </div>
+              <div class="col-md-2">
+                <img src="./assets/images/userpolicy/information.png" class="information" >
+              </div>
+          </div>
+          <div class="col-md-12 row">
+              <img src="./assets/images/userpolicy/deep-storage.png" class="database" >
+          </div>
+        </div>
+        <div class="col-md-12 row thrddivstyle">
+          <div class="col-md-12 row rowclss">
+            <label class="text-style-1" ><img src="./assets/images/userpolicy/transaction-hours.png" class="editicon">&nbsp;Transaction hours</label>
+            <label class="datastyle">{{deepStorage.transactionTimeStart}}&nbsp;&nbsp;to&nbsp;&nbsp;{{deepStorage.transactionTimeEnd}}</label>
+          </div>
+          <div class="col-md-12 row rowclss">
+              <label class="text-style-1" ><img src="./assets/images/userpolicy/ip-address.png" class="editicon">&nbsp;Maximum allowed IPs</label>
+              <label class="datastyle">{{deepStorage.maximumAllowedIp}}</label>
+            </div>
+            <div class="col-md-12 row rowclss">
+              <label class="text-style-1" ><img src="./assets/images/userpolicy/wallet-address.png" class="editicon">&nbsp;Maximum allowed wallets</label>
+              <label class="datastyle">{{deepStorage.maximumAllowedWallets}}</label>
+            </div>
+            <div class="col-md-12 row rowclss">
+                <label class="text-style-1" ><img src="./assets/images/userpolicy/transaction-volume.png" class="editicon">&nbsp;Transaction Max Allowed Volume Cap</label>
+                <label class="datastyle">{{deepStorage.transactionVolumeCap}} %</label>
+              </div>
+              <div class="col-md-12 row rowclss">
+                  <label class="text-style-1" ><img src="./assets/images/userpolicy/frequency-cap.png" class="editicon">&nbsp;Max Allowed Freq Cap </label>
+                  <label class="datastyle">{{deepStorage.transactionLimit}}&nbsp; Per day </label>
+                </div>
+                <div class="col-md-12 row rowclss">
+                    <label class="text-style-1" ><img src="./assets/images/userpolicy/new-device.png" class="editicon">&nbsp;Transaction Mimimum Balance </label>
+                    <label class="datastyle">{{deepStorage.minimumBalance}}%</label>
+                  </div>
+                <div class="col-md-12 row rowclss">
+                  <label class="text-style-1" ><img src="./assets/images/userpolicy/new-device.png" class="editicon">&nbsp;Transaction Unit of measure </label>
+                  <label class="datastyle">Per&nbsp;{{deepStorage.transactionUnitOfMeasure}}&nbsp;mins</label>
+                </div>
+                
+                      <div class="col-md-12 row rowclss">
+                      
+                        <button type="submit" class="selectbtn" (click)="gotosignup(deepStorageId)">SELECT</button>
+                      </div>
+          </div>
+          
+      </div>
+    <div class="col-md-3 cardstlye">
+      <div class=" col-md-12 row example-header-image" >
+          <div class="col-md-12 row">
+          <div class="col-md-10 headertext row">
+              HIGH FREQUENCY
+          </div>
+          <div class="col-md-2">
+              <img src="./assets/images/userpolicy/information.png" class="information" >
+            </div>
+          </div>
+          <div class="col-md-12 row">
+              <img src="./assets/images/userpolicy/highfrequency.png" class="database" >
+          </div>
+      </div>
+      <div class="col-md-12 row thrddivstyle">
+        <div class="col-md-12 row rowclss">
+          <label class="text-style-1" ><img src="./assets/images/userpolicy/transaction-hours.png" class="editicon">&nbsp;Transaction hours</label>
+          <label class="datastyle">{{highFrequency.transactionTimeStart}}&nbsp;&nbsp;to&nbsp;&nbsp;{{highFrequency.transactionTimeEnd}}</label>
+        </div>
+        <div class="col-md-12 row rowclss">
+            <label class="text-style-1" ><img src="./assets/images/userpolicy/ip-address.png" class="editicon">&nbsp;Maximum allowed IPs</label>
+            <label class="datastyle">{{highFrequency.maximumAllowedIp}}</label>
+          </div>
+          <div class="col-md-12 row rowclss">
+            <label class="text-style-1" ><img src="./assets/images/userpolicy/wallet-address.png" class="editicon">&nbsp;Maximum allowed wallets</label>
+            <label class="datastyle">{{highFrequency.maximumAllowedWallets}}</label>
+          </div>
+          <div class="col-md-12 row rowclss">
+              <label class="text-style-1" ><img src="./assets/images/userpolicy/transaction-volume.png" class="editicon">&nbsp;Transaction Max Allowed Volume Cap</label>
+              <label class="datastyle">{{highFrequency.transactionVolumeCap}}%</label>
+            </div>
+            <div class="col-md-12 row rowclss">
+                <label class="text-style-1" ><img src="./assets/images/userpolicy/frequency-cap.png" class="editicon">&nbsp;Max Allowed Freq Cap </label>
+                <label class="datastyle">{{highFrequency.transactionLimit}}</label>
+              </div>
+              <div class="col-md-12 row rowclss">
+                  <label class="text-style-1" ><img src="./assets/images/userpolicy/new-device.png" class="editicon">&nbsp;Transaction Mimimum Balance </label>
+                  <label class="datastyle">{{highFrequency.minimumBalance}}%</label>
+                </div>
+              <div class="col-md-12 row rowclss">
+                <label class="text-style-1" ><img src="./assets/images/userpolicy/new-device.png" class="editicon">&nbsp;Transaction Unit of measure </label>
+                <label class="datastyle">Per&nbsp; {{highFrequency.transactionUnitOfMeasure}}&nbsp; mins</label>
+              </div>
+                  <div class="col-md-12 row rowclss">
+                      <button type="submit" class="selectbtn" (click)="gotosignup(highFrequencyId)">SELECT</button>
+                    </div>
+        </div>
+    </div>
+
+    <div class="col-md-1"></div>
+    </div>  
+
+    

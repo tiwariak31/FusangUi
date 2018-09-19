@@ -18,7 +18,7 @@ import { DashboardComponent } from './home/dashboard/dashboard.component';
 import { SettingComponent } from './home/setting/setting.component';
 import { SuggestionsComponent } from './home/suggestions/suggestions.component';
 import { UsersComponent } from './home/users/users.component';
-import { AppRoutingModule } from './/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { SignInComponent } from './onboarding/sign-in/sign-in.component';
 import { SignUpComponent } from './onboarding/sign-up/sign-up.component';
 import { ForgetPasswordComponent } from './onboarding/forget-password/forget-password.component';
@@ -53,9 +53,16 @@ import { InputexpDirective } from './inputexp.directive';
 // import { ChartModule } from 'angular-highcharts';
 import {NgAutoCompleteModule} from 'ng-auto-complete';
 import { AutoCompleteModule } from 'ng4-auto-complete';
-import {MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatButtonModule} from '@angular/material';
+import {
+  MatFormFieldModule,
+  MatInputModule,
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatSortModule,
+  MatPaginatorModule
+} from '@angular/material';
 // import {ShowLoadingComponent} from './'
-
+import {MatTableModule} from '@angular/material/table';
 import { ChartModule } from 'angular-highcharts';
 import { UserProfileComponent } from './home/userdashboard/user-profile/user-profile.component';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -63,8 +70,19 @@ import { ResetPasswordComponent } from './onboarding/reset-password/reset-passwo
 import { ToasterModalComponent } from './common/toaster-modal/toaster-modal.component';
 import { ToasterErrorModalComponent } from './common/toaster-error-modal/toaster-error-modal.component';
 import { ToasterInfoModalComponent } from './common/toaster-info-modal/toaster-info-modal.component';
-import { InviteCustomersComponent } from './home/users/invite-customers/invite-customers.component';
+import { TableComponentComponent } from './common/table-component/table-component.component';
+import { CustomersComponent } from './home/customers/customers.component';
 
+import { OnboardflowComponent } from './home/onboardflow/onboardflow.component';
+
+
+import { InviteCustomersComponent } from './home/users/invite-customers/invite-customers.component';
+import { PloicyConfigComponent } from './home/ploicy-config/ploicy-config.component';
+import { UserTypeComponent } from './onboarding/user-type/user-type.component';
+import { GlobalPolicyComponent } from './common/global-policy/global-policy.component';
+import { TicketComponent } from './home/ticket/ticket.component';
+// import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+// import { PolicyConstants } from './policyconfig';
 declare var require: any;
 // export function highchartsFactory() {
 //   // return require('highcharts');
@@ -103,9 +121,18 @@ declare var require: any;
     ToasterModalComponent,
     ToasterErrorModalComponent,
     ToasterInfoModalComponent,
-    InviteCustomersComponent
+    InviteCustomersComponent,
+    OnboardflowComponent,
+    TableComponentComponent,
+    CustomersComponent,
+    PloicyConfigComponent,
+    UserTypeComponent,
+    GlobalPolicyComponent,
+    TicketComponent,
+    // PolicyConstants,
   ],
   imports: [
+    // BsDatepickerModule.forRoot(),
     BsDropdownModule.forRoot(),
     BrowserModule,
     BrowserAnimationsModule,
@@ -136,6 +163,9 @@ declare var require: any;
     MatAutocompleteModule,
     MatFormFieldModule,
     MatButtonModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule
   ],
   providers: [GeneralService, SharedService, DatePipe, TitleCasePipe],
   bootstrap: [AppComponent]

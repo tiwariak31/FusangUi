@@ -575,3 +575,166 @@ opacity: 0.5;
   margin-top: 20px;
 }
 }
+.invite-cus-pop{
+  width:584px!important;
+}
+.modal-dialog.invite-cus-pop.modal-lg ::ng-deep .modal-content {
+  border-radius: 0px;
+}
+.modal-header-wrapper{
+  padding: 8px 0px 2px 0px;
+  width:100%;
+  display: flex;
+  text-align: center;
+  }
+  .c-green-text{
+    color: #67b830;
+}
+.c-gray-text{
+    color: #9b9b9b;
+}
+.padd32{
+    padding:0px 32px;
+}
+.marg32{
+    margin:23px 32px;
+}
+.example-full-width {
+   
+  width: 95%;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-family: khula-semibold;
+}
+.padd32{
+  padding:0px 32px;
+}
+.verifier-text{
+  display: inline-block;
+  /* width: 15%; */
+  position: relative;
+  top:12px;
+  color: #5a5a5a;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: khula-semibold;
+}
+.example-third-width {
+  width: 22%;
+   margin-right: 3px;
+}
+.example-half-width {
+  width: 45%;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-family: khula-semibold;
+}
+.notefield {
+   
+  width: 95%;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-family: khula-semibold;
+}
+.info__right__detail {
+  width: 100%;
+  border-radius: 4px;
+  padding: 14px 16px 14px;
+  /* border-top: 2px solid #d42e42; */
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+.trans-confirm {
+
+  height: 39px;
+  font-family:khula-lite;
+  font-size: 24px;
+  font-weight: 300;
+  color: #3954e5;
+  position: relative;
+    left: 27%;
+}
+.Standard-Transaction {
+  width: 172px;
+  height: 14px;
+  font-family: khula-semibold;
+  font-size: 9px;
+  font-weight: 600;
+  color: #457199;
+}
+.approve-button {
+  height: 30px;
+  background-color: #f39233;
+  color: white;
+  font-family: khula-semibold;
+  border: none;
+  border-radius: 4px;
+  padding: 0px 10px;
+  margin-right: 10px;
+  font-size: 14px;
+}
+.rejecct-button{
+  height: 30px;
+  border-radius: 3px;
+  border: solid 0.5px #cccccc;
+  background-color: white;
+  color:#f39233;
+  font-family: khula-semibold;
+  padding: 0px 10px;
+  margin-right: 10px;
+  font-size: 14px;
+}
+.ststuscls{
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  margin-left: 10px
+}
+.Signature-Status {
+  font-family: khula-Regular;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #de792f;
+  padding-left: 32px;
+}
+.signatory-bg{
+  background-color: rgba(222, 121, 47, 0.05);
+  /* padding: 0px; */
+  margin: 10px -15px;
+  border-top: 1px solid #e6ecf3;
+  border-bottom: 1px solid #e6ecf3;
+}
+.userclas{
+  padding-left: 32px;
+  font-family: khula-semibold;
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4a4a4a;
+}
+.activecls{
+  font-family: khula-semibold;
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #9b9b9b;
+}

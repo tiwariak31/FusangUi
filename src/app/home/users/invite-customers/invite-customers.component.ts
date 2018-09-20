@@ -424,16 +424,21 @@ export class InviteCustomersComponent implements OnInit {
 addDepartment() {
   this.addDept = true;
   const obj: any  = this.roleDepartmentObj;
-  if (_.findIndex(this.roleDepartmentDetails, function(o) {
-    return (o.department === obj.department && o.userRole === obj.userRole);
-  }) === -1) {
-    this.roleDepartmentDetails.push(this.roleDepartmentObj);
-    // this.listDepartment(this.roleDepartmentDetails);
-    this.roleDepartmentObj = {};
+  if (this.ss.validVal(this.roleDepartmentObj.department) && this.ss.validVal(this.roleDepartmentObj.userRole)) {
+    if (_.findIndex(this.roleDepartmentDetails, function(o) {
+      return (o.department === obj.department && o.userRole === obj.userRole);
+    }) === -1) {
+      this.roleDepartmentDetails.push(this.roleDepartmentObj);
+      // this.listDepartment(this.roleDepartmentDetails);
+      this.roleDepartmentObj = {};
+    } else {
+      this.toastr.error('same entry');
+    }
+    console.log(this.roleDepartmentDetails);
   } else {
-    this.toastr.error('same entry');
+    this.toastr.error('Please enter the details!!!');
+    return false;
   }
-  console.log(this.roleDepartmentDetails);
 }
 // listDepartment(d) {
 //   d.forEach(element => {
@@ -489,19 +494,23 @@ inviteUser() {
  this.totalData['roleDepartmentDetails'] = data;
  console.log('this.totalData[\'roleDepartmentDetails\']', this.totalData['roleDepartmentDetails']);
 }
-// getRole (el) {
-//   let dept: any, uR: any;
-//   dept = el.department;
-//   uR = 
-//   return el.department.split(' ')[0].toUpperCase() + '_' + el.userRole.toUpperCase;
-// }
 deleteDepartment(i) {
- // debugger
  this.roleDepartmentDetails.splice(i, 1);
+ if (this.roleDepartmentDetails.length === 0) {
+  this.addDept = true;
+ }
 }
 clearDepartment() {
   this.addDept = false;
-  this.roleDepartmentObj = {};
+  if (this.roleDepartmentDetails.length === 0) {
+    this.addDept = true;
+    return false;
+  } else {
+    this.roleDepartmentObj = {
+      'department' : '',
+      'userRole' : ''
+    };
+  }
 }
 onDepChanged(event: MatAutocompleteSelectedEvent) {
  const departmentId = event.option.value.id;

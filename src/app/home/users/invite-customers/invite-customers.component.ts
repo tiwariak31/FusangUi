@@ -22,31 +22,32 @@ import * as _ from 'lodash';
   styleUrls: ['./invite-customers.component.css']
 })
 export class InviteCustomersComponent implements OnInit {
-  typeObj={
-  "primary":'',
-    "backup":'',
-    "userRole":''
-  }
+  typeObj = {
+  'primary': '',
+    'backup': '',
+    'userRole': ''
+  };
   dpControl = new FormControl('', [
     Validators.email,
-    
+
   ]);
+  totalData: any = {};
   phoneNumber: any = '';
   model: any = {};
   modalRef: BsModalRef;
-  basic:Boolean = true;
-  approver:Boolean = false;
-  cusclass:any=[];
-  countrylist:any=[];
-  countrylist1:any=[];
-  basicmodel:any={firstName:'',
+  basic = true;
+  approver = false;
+  cusclass: any = [];
+  countrylist: any = [];
+  countrylist1: any = [];
+  basicmodel: any = {firstName: '',
                   lastName: '',
-                  country:'',
-                  phoneNo:'',
-                  email:''
+                  country: '',
+                  phoneNo: '',
+                  email: ''
                 };
-  x:any = [];
-  fullformData:any={};
+  x: any = [];
+  fullformData: any = {};
   userRelationshipManagerMap: any = [];
   relationshipManagerDetails: any = [];
   dataList: any = {};
@@ -67,22 +68,26 @@ export class InviteCustomersComponent implements OnInit {
   approverForm: any;
   appService: any;
   msg: any;
-  Yubikey: boolean=false;
-  googleAuth: boolean=true;
-  verificationCodeValid: boolean=false;
-  googleCode:any;
+  Yubikey = false;
+  googleAuth = true;
+  verificationCodeValid = false;
+  googleCode: any;
   countryPhonelen: any;
   phonelenth: any;
   assignroles: boolean;
-  roleDepartmentDetails:any=[];
-  roleDepartmentObj:any={};
-  userDetailsList:any=[];
-  filterdDetailsList:any=[];
+  roleDepartmentDetails: any = [];
+  roleDepartmentObj: any = {};
+  userDetailsList: any = [];
+  filterdDetailsList: any = [];
   roleList: any;
-  tempObj:any={};
+  tempObj: any = {};
+  roleInformationList: any = [];
+  index: any = 0;
+  newDeptRoleObj: any = {};
+  addDept = true;
   constructor(private _domSanitizer: DomSanitizer, private modalService: BsModalService,
     private router: Router, private gs: GeneralService, private ss: SharedService, private toastr: ToastrService,
-     private titlecasePipe: TitleCasePipe,private fb: FormBuilder ) { }
+     private titlecasePipe: TitleCasePipe, private fb: FormBuilder ) { }
 
   ngOnInit() {
     this.basicForm = this.fb.group({
@@ -90,7 +95,7 @@ export class InviteCustomersComponent implements OnInit {
       lastName: ['', Validators.required],
       username: ['', [Validators.required, Validators.email]],
       country: ['', [Validators.required]],
-      phoneNumber: ['', [Validators.required,Validators.pattern('^([0-9]{1,5})?([7-9][0-9]{7,9})$')]]
+      phoneNumber: ['', [Validators.required, Validators.pattern('^([0-9]{1,5})?([7-9][0-9]{7,9})$')]]
     });
 
     // this.approverForm = this.fb.group({
@@ -117,7 +122,7 @@ export class InviteCustomersComponent implements OnInit {
     .valueChanges
     .pipe(
       map(value => {
-        return this._filter(value)})
+        return this._filter(value); })
     );
 
     // this.phonelenth = this.basicForm
@@ -136,7 +141,7 @@ export class InviteCustomersComponent implements OnInit {
     this.countrylist.forEach((element) => {
       if (event.option.value.toLowerCase() === element.name.toLowerCase()) {
         this.code = element.dial_code;
-        this.countryPhonelen=element.length;
+        this.countryPhonelen = element.length;
         console.log(this.countryPhonelen);
         this.phonelength = element.length;
         this.basicmodel.phoneNo = this.code + ' ';
@@ -147,10 +152,10 @@ export class InviteCustomersComponent implements OnInit {
 
   inviteCustomer(invitetemplate: TemplateRef<any>, template: TemplateRef<any>) {
     // this.basicmodel=
-    this.modalRef = this.modalService.show(invitetemplate,Object.assign({}, { class: 'invite-cus-pop modal-lg' }));
+    this.modalRef = this.modalService.show(invitetemplate, Object.assign({}, { class: 'invite-cus-pop modal-lg' }));
   }
-  private _filter(value){
-    if(value !=""){
+  private _filter(value) {
+    if (value !== '') {
     const filterValue = value.toLowerCase();
     return this.countrylist1.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
@@ -171,7 +176,7 @@ export class InviteCustomersComponent implements OnInit {
       }
     );
   }
-  invitedSuccessfull(successtemplate: TemplateRef<any>,msg, template: TemplateRef<any>){
+  invitedSuccessfull(successtemplate: TemplateRef<any>, msg, template: TemplateRef<any>) {
 
     Object.keys(this.model).forEach((el) => {
       let deptId: any, index: any;
@@ -185,7 +190,8 @@ export class InviteCustomersComponent implements OnInit {
 
     this.userRelationshipManagerMap.forEach(dept => {
       let data: any, userTotalData: any;
-      data = [], userTotalData = [];
+      data = [];
+      userTotalData = [];
       Object.keys(this.model).forEach((user) => {
         let type: any, deptId: any, obj: any;
         obj = {};
@@ -216,33 +222,33 @@ export class InviteCustomersComponent implements OnInit {
       userTotalData = _.uniqBy(userTotalData, 'userRole');
       dept['relationshipManagerDetails'] = userTotalData;
     });
-    this.fullformData.userRole="USER";
-    this.fullformData.departmentId= null;
-    this.fullformData.userRelationshipManagerMap=this.userRelationshipManagerMap;
+    this.fullformData.userRole = 'USER';
+    this.fullformData.departmentId = null;
+    this.fullformData.userRelationshipManagerMap = this.userRelationshipManagerMap;
     console.log(this.fullformData);
     const url = 'user/inviteCustomer';
-    this.gs.generalServiceInfo(url,'post',this.fullformData)
+    this.gs.generalServiceInfo(url, 'post', this.fullformData)
     .subscribe(
       res => {
-        this.msg = res["message"];
+        this.msg = res['message'];
       },
       e => {
       },
       () => {
       }
     );
-   //lines for model open and heid
+    // lines for model open and heid
     // this.userRelationshipManagerMap.push()
     // console.log( this.AccountManagementList);
     this.modalRef.hide();
-    this.successRef = this.modalService.show(successtemplate,Object.assign({}, { class: 'invite-cus-pop modal-lg' }));
+    this.successRef = this.modalService.show(successtemplate, Object.assign({}, { class: 'invite-cus-pop modal-lg' }));
   }
   getinvitedata() {
     // this.x = ApproverInformation.data;
     // const url = '/assets/json/inviteaccordion.json';
-    const nullobj={}
-    const url= 'department/getDepartmentList'
-    this.gs.generalServiceInfo(url,'post',nullobj)
+    const nullobj = {};
+    const url = 'department/getDepartmentList';
+    this.gs.generalServiceInfo(url, 'post', nullobj)
     .subscribe(
       res => {
         this.x = res['data'];
@@ -261,44 +267,44 @@ export class InviteCustomersComponent implements OnInit {
   showbasic() {
     this.basic = true;
     this.approver = false;
-    this.assignroles=false
+    this.assignroles = false;
   }
   showapprover() {
     Object.keys(this.basicForm.value).forEach(element => {
-      this.fullformData[element]=this.basicForm.value[element]
+      this.fullformData[element] = this.basicForm.value[element];
 
     });
     this.basic = false;
     this.approver = true;
-    this.assignroles=false
+    this.assignroles = false;
   }
-  showassignroles(){
+  showassignroles() {
     Object.keys(this.basicForm.value).forEach(element => {
-      this.fullformData[element]=this.basicForm.value[element]
+      this.fullformData[element] = this.basicForm.value[element];
 
     });
     this.basic = false;
     this.approver = false;
-    this.assignroles=true;
+    this.assignroles = true;
   }
-  nexttab(){
+  nexttab() {
     Object.keys(this.basicForm.value).forEach(element => {
-      this.fullformData[element]=this.basicForm.value[element]
+      this.fullformData[element] = this.basicForm.value[element];
 
     });
     console.log( this.fullformData);
-    this.showapprover()
+    this.showapprover();
   }
   onDeptSelect(item) {
     // const url = '/assets/json/deptList' + item.id + '.json';
-    const url ="department/getUserDepartmentRoleList";
+    const url = 'department/getUserDepartmentRoleList';
 
     // this.gs.localfileinfo(url)
     let data: any;
     data = {
       'id': item.id
     };
-    this.gs.generalServiceInfo(url, "post", data)
+    this.gs.generalServiceInfo(url, 'post', data)
     .subscribe(
       res => {
         // this.x = res;
@@ -313,7 +319,7 @@ export class InviteCustomersComponent implements OnInit {
   }
   onFocus(val) {
     // console.log(val);
-    // debugger
+    // // debugger
     this.filteredValues = this.dataList[val];
     console.log(this.filteredValues );
     this.totalFilteredValues = this.dataList[val];
@@ -337,7 +343,7 @@ export class InviteCustomersComponent implements OnInit {
   }
 
   displayFn(user): string {
-    // debugger
+    // // debugger
     if (user === null || user === undefined || user === '') {
       return '';
     } else {
@@ -345,22 +351,22 @@ export class InviteCustomersComponent implements OnInit {
     }
   }
 
-  signupSuccess(signupsuccess: TemplateRef<any>, template: TemplateRef<any>){
-    this.signupsuccessRef = this.modalService.show(signupsuccess,Object.assign({}, { class: 'invite-cus-pop modal-lg' }));
+  signupSuccess(signupsuccess: TemplateRef<any>, template: TemplateRef<any>) {
+    this.signupsuccessRef = this.modalService.show(signupsuccess, Object.assign({}, { class: 'invite-cus-pop modal-lg' }));
   }
 
 
   policyInsights(policyinsights: TemplateRef<any>, template: TemplateRef<any>) {
-    this.policyRef = this.modalService.show(policyinsights,Object.assign({}, { class: 'invite-cus-pop modal-lg' }));
+    this.policyRef = this.modalService.show(policyinsights, Object.assign({}, { class: 'invite-cus-pop modal-lg' }));
   }
   complianceInsights(complianceinsights: TemplateRef<any>, template: TemplateRef<any>) {
-    this.complianceRef = this.modalService.show(complianceinsights,Object.assign({}, { class: 'invite-cus-pop modal-lg' }));
+    this.complianceRef = this.modalService.show(complianceinsights, Object.assign({}, { class: 'invite-cus-pop modal-lg' }));
   }
-  confirmChecking(confirmchecking: TemplateRef<any>){
-    this.confirmRef = this.modalService.show(confirmchecking,Object.assign({}, { class: 'invite-cus-pop modal-lg' }));
+  confirmChecking(confirmchecking: TemplateRef<any>) {
+    this.confirmRef = this.modalService.show(confirmchecking, Object.assign({}, { class: 'invite-cus-pop modal-lg' }));
   }
-  rejectVerification(rejectverification: TemplateRef<any>){
-    this.rejectRef = this.modalService.show(rejectverification,Object.assign({}, { class: 'invite-cus-pop modal-lg' }));
+  rejectVerification(rejectverification: TemplateRef<any>) {
+    this.rejectRef = this.modalService.show(rejectverification, Object.assign({}, { class: 'invite-cus-pop modal-lg' }));
   }
 
   // getinvitedata(){
@@ -376,8 +382,8 @@ export class InviteCustomersComponent implements OnInit {
   //     }
   //   );
   // }
-  authPublic(auth: TemplateRef<any>){
-    this.modalRef = this.modalService.show(auth,Object.assign({}, { class: 'invite-cus-pop modal-lg' }));
+  authPublic(auth: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(auth, Object.assign({}, { class: 'invite-cus-pop modal-lg' }));
   }
   showgooleAuth() {
     this.googleAuth = true;
@@ -387,7 +393,7 @@ export class InviteCustomersComponent implements OnInit {
     this.googleAuth = false;
     this.Yubikey = true;
   }
-  validate(){
+  validate() {
     alert('need to call API');
   }
   vcValidation(event) {
@@ -400,57 +406,120 @@ export class InviteCustomersComponent implements OnInit {
   getLength(x) {
     return Math.max(Math.floor(Math.log10(Math.abs(x))), 0) + 1;
   }
-  //invite user functions------------------------------------------------
-  onDepFocus(){
-    this.userDetailsList = this.x;
-    this.filterdDetailsList=this.x
+  // invite user functions------------------------------------------------
+  onDepFocus() {
+    this.x.forEach(el => {
+      this.userDetailsList.push(el.name);
+    });
+    // this.userDetailsList = this.x;
+    this.filterdDetailsList = this.x;
     console.log(this.x);
  }
- onRoleFocus(){
+ onRoleFocus() {
    this.userDetailsList = this.roleList;
-   this.filterdDetailsList=this.roleList
+   this.filterdDetailsList = this.roleList;
    console.log(this.x);
 }
 
 addDepartment() {
- debugger
- this.roleDepartmentDetails.push(this.tempObj);
+  this.addDept = true;
+  const obj: any  = this.roleDepartmentObj;
+  if (_.findIndex(this.roleDepartmentDetails, function(o) {
+    return (o.department === obj.department && o.userRole === obj.userRole);
+  }) === -1) {
+    this.roleDepartmentDetails.push(this.roleDepartmentObj);
+    // this.listDepartment(this.roleDepartmentDetails);
+    this.roleDepartmentObj = {};
+  } else {
+    this.toastr.error('same entry');
+  }
+  console.log(this.roleDepartmentDetails);
 }
+// listDepartment(d) {
+//   d.forEach(element => {
+//     this.newDeptRoleObj[
+//       element.department.name.split(' ')[0].toUpperCase()  + '_' + element.userRole.toUpperCase() + '_' + element.department.id
+//     ] = element.department;
+//     this.newDeptRoleObj[
+//       'role_' + element.userRole + '_' + element.department.id
+//     ] = element.userRole;
+//   });
+// }
 
 onDepSearch(val) {
- if (typeof(val) === 'string' || val === '') {
-   // console.log('number');
-   this.userDetailsList = _.filter(this.filterdDetailsList, (o) => {
-     return o.name.toLowerCase().indexOf(val.toLowerCase()) > -1;
-   });
- } 
+  console.log('val', val);
+  // this.roleInformationList = val.role;
+  this.roleInformationList = _.find(this.x, function(o) {return o.name === val; }).role;
+//  if (typeof(val) === 'string' || val === '') {
+//    // console.log('number');
+//    this.userDetailsList = _.filter(this.filterdDetailsList, (o) => {
+//      return o.name.toLowerCase().indexOf(val.toLowerCase()) > -1;
+//    });
+//  }
+}
+onRoleSelect(role) {
+  console.log(this.roleDepartmentObj);
 }
 
-inviteUser(){
+inviteUser() {
  // this.roleDepartmentDetails.push(this.roleDepartmentObj)
- console.log(this.roleDepartmentObj);
+ if (this.ss.validVal(this.roleDepartmentObj.department) && this.ss.validVal(this.roleDepartmentObj.userRole)) {
+  const obj: any  = this.roleDepartmentObj;
+  if (_.findIndex(this.roleDepartmentDetails, function(o) {
+    return (o.department === obj.department && o.userRole === obj.userRole);
+  }) === -1) {
+    this.roleDepartmentDetails.push(this.roleDepartmentObj);
+    // this.listDepartment(this.roleDepartmentDetails);
+    this.roleDepartmentObj = {};
+  } else {
+    this.toastr.error('same entry');
+    return false;
+  }
+ }
+//  console.log(this.roleDepartmentObj);
+ let data: any;
+ data = [];
+ this.roleDepartmentDetails.forEach(element => {
+   let obj: any;
+   obj = {};
+   obj['departmentId'] = _.find(this.x, function(o) {return o.name === element.department; }).id;
+   obj['userRole'] = element.department.split(' ')[0].toUpperCase() + '_' + element.userRole.toUpperCase();
+   data.push(obj);
+ });
+ this.totalData['roleDepartmentDetails'] = data;
+ console.log('this.totalData[\'roleDepartmentDetails\']', this.totalData['roleDepartmentDetails']);
 }
-deleteDepartment(i){
- debugger
- this.roleDepartmentDetails.splice(i, 1)
+// getRole (el) {
+//   let dept: any, uR: any;
+//   dept = el.department;
+//   uR = 
+//   return el.department.split(' ')[0].toUpperCase() + '_' + el.userRole.toUpperCase;
+// }
+deleteDepartment(i) {
+ // debugger
+ this.roleDepartmentDetails.splice(i, 1);
 }
-onDepChanged(event: MatAutocompleteSelectedEvent){
- let departmentId = event.option.value.id;
- this.tempObj.departmentId=departmentId
- debugger
-
-}  
-onRoleChanged(event: MatAutocompleteSelectedEvent){
- let userRole = event.option.value;
- this.tempObj.userRole=userRole;
- debugger
+clearDepartment() {
+  this.addDept = false;
+  this.roleDepartmentObj = {};
+}
+onDepChanged(event: MatAutocompleteSelectedEvent) {
+ const departmentId = event.option.value.id;
+ this.tempObj.departmentId = departmentId;
+ // debugger
 
 }
-getrolelist(){
+onRoleChanged(event: MatAutocompleteSelectedEvent) {
+ const userRole = event.option.value;
+ this.tempObj.userRole = userRole;
+ // debugger
 
-  const nullobj={}
-  const url= 'user/getRoleList'
-  this.gs.generalServiceInfo(url,'post',nullobj)
+}
+getrolelist() {
+
+  const nullobj = {};
+  const url = 'user/getRoleList';
+  this.gs.generalServiceInfo(url, 'post', nullobj)
   .subscribe(
     response => {
       this.roleList = response['data'];
@@ -466,5 +535,5 @@ getrolelist(){
     }
   );
 }
-  
+
 }

@@ -100,18 +100,18 @@
             <div class="inner-form">
                 <div class="row-wrapper">
                     <mat-form-field class="example-half-width user-tab-width">
-                        <input type="text" class="arrow" required placeholder="Department" aria-label="String" matInput  [matAutocomplete]="auto"  [(ngModel)]="roleDepartmentObj['departmentname'+0]" [name]="'departmentname'"  [matAutocomplete]="auto3" (focus)="onDepFocus()"><span></span>
-                        <mat-autocomplete #auto="matAutocomplete" class="autocomplete" [displayWith]="displayFn.bind(x)">
-                          <mat-option  class="autocomplete" *ngFor="let list of x" [value]="list" >
+                        <input type="text" class="arrow" required placeholder="Department" aria-label="String" matInput  [(ngModel)]="roleDepartmentObj['departmentid']" [name]="'departmentid'"  [matAutocomplete]="auto3" (ngModelChange)="onDepSearch(roleDepartmentObj['departmentid'])" (focus)="onDepFocus()"><span></span>
+                        <mat-autocomplete #auto3="matAutocomplete" class="autocomplete" [displayWith]="displayFn" (optionSelected)="onDepChanged($event)">
+                          <mat-option  class="autocomplete" *ngFor="let list of userDetailsList" [value]="list" >
                               {{list.name}}
                           </mat-option>
                         </mat-autocomplete>
                       </mat-form-field>
                     <mat-form-field class=" example-half-width user-tab-width">
-                          <input type="text" class="arrow" required placeholder="Role" aria-label="String" matInput  [matAutocomplete]="auto" [(ngModel)]="roleDepartmentObj['userRole']" [name]="'userRole'+0"><span></span>
-                          <mat-autocomplete #auto="matAutocomplete" class="autocomplete" [displayWith]="displayFn">
-                            <mat-option *ngFor="let item of filteredOptions| async" [value]="item" >
-                                {{item}}
+                          <input type="text" class="arrow" required placeholder="Role" aria-label="String" matInput  [matAutocomplete]="auto4" [(ngModel)]="roleDepartmentObj['userRole']" [name]="'userRole'" (ngModelChange)="onDepSearch(roleDepartmentObj['userRole'])" (focus)="onRoleFocus()"><span></span>
+                          <mat-autocomplete #auto4="matAutocomplete" (optionSelected)="onRoleChanged($event)" class="autocomplete" >
+                            <mat-option *ngFor="let role of userDetailsList" [value]="role" >
+                                {{role}}
                             </mat-option>
                           </mat-autocomplete>
                     </mat-form-field>
@@ -119,16 +119,16 @@
                 </div>
                 <div class="row-wrapper" *ngFor="let list of roleDepartmentDetails;let i =index">
                     <mat-form-field class="example-half-width user-tab-width">
-                        <input type="text" class="arrow" required placeholder="Department" aria-label="String" matInput  [matAutocomplete]="auto" [(ngModel)]="roleDepartmentObj['departmentname'+i-1]" [name]="'departmentname'+i-1"><span></span>
-                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectionChanged($event)">
+                        <input type="text" class="arrow" required placeholder="Department" aria-label="String" matInput  [matAutocomplete]="auto5" [(ngModel)]="roleDepartmentObj['departmentname']" [name]="'departmentname'"><span></span>
+                        <mat-autocomplete #auto5="matAutocomplete" (optionSelected)="onSelectionChanged($event)">
                           <mat-option *ngFor="let item of filteredOptions| async" [value]="item" >
                               {{item}}
                           </mat-option>
                         </mat-autocomplete>
                       </mat-form-field>
                     <mat-form-field class=" example-half-width user-tab-width">
-                          <input type="text" class="arrow" required placeholder="Role" aria-label="String" matInput  [matAutocomplete]="auto" (ngModel)]="roleDepartmentObj['userRole'+i-1]" [name]="'userRole'+i-1"><span></span>
-                          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectionChanged($event)">
+                          <input type="text" class="arrow" required placeholder="Role" aria-label="String" matInput  [matAutocomplete]="auto6" [(ngModel)]="roleDepartmentObj['userRole']" [name]="'userRole'"><span></span>
+                          <mat-autocomplete #auto6="matAutocomplete" (optionSelected)="onSelectionChanged($event)">
                             <mat-option *ngFor="let item of filteredOptions| async" [value]="item" >
                                 {{item}}
                             </mat-option>
